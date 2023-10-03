@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Common class */
+.container {
+  @apply max-[640px]:max-w-[600px] max-[960px]:max-w-[900px] max-[1280px]:max-w-[1200px] px-4 mx-auto;
+}
+
+.dark-bg {
+  @apply dark:bg-gradient-to-b dark:from-gray-900 dark:to-black;
+}
+
+@keyframes changeBackgroundColor {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  16.67% {
+    opacity: 0.8;
+  }
+  33.33% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  66.67% {
+    opacity: 0.5;
+  }
+  83.33% {
+    opacity: 0.4;
+  }
+}
+
+.hero-animation {
+  @apply bg-[linear-gradient(_147.92deg,#dc143c_10.41%,hsla(0,0%,100%,0)_89.25%_)] dark:bg-[linear-gradient(_147.92deg,#39c1d3_10.41%,hsla(0,0%,100%,0)_89.25%_)] animate-[changeBackgroundColor_8s_infinite];
+}
+
+/* Button */
+.primary-btn {
+  @apply py-2 px-4 flex items-center justify-center gap-x-1 rounded-[5px] dark:bg-secondary bg-tertiary text-white font-bold;
+}
+
+/* Form */
+.form-title {
+  @apply text-[25px] text-black dark:text-white font-medium text-center py-2;
+}
+
+.form-input-label {
+  @apply text-sm text-black dark:text-white font-bold;
+}
