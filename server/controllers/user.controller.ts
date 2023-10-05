@@ -29,6 +29,7 @@ export const registrationUser = CatchAsyncErrors(
       const { name, email, password } = req.body as IRegistrationBody;
 
       const isEmailExist = await userModel.findOne({ email });
+
       if (isEmailExist) {
         return next(new ErrorHandler("Email already exist", 400));
       }
@@ -228,9 +229,9 @@ export const updateAccessToken = CatchAsyncErrors(
 // Get user info
 export const getUserInfo = CatchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.user?._id;
-    getUserById(userId, res);
     try {
+      const userId = req.user?._id;
+      getUserById(userId, res);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -271,19 +272,11 @@ interface IUpdateUserInfo {
 export const updateUserInfo = CatchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { name, email } = req.body as IUpdateUserInfo;
+      const { name } = req.body as IUpdateUserInfo;
 
       const userId = req.user?._id;
 
       const user = await userModel.findById(userId);
-
-      if (email && user) {
-        const isEmailExist = await userModel.findOne({ email });
-        if (isEmailExist)
-          return next(new ErrorHandler("Email already exist", 400));
-
-        user.email = email;
-      }
 
       if (name && user) {
         user.name = name;

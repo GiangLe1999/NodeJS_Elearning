@@ -9,11 +9,15 @@ const Hero: FC<Props> = (props): JSX.Element => {
   return (
     <div className="container grid grid-cols-2 gap-10 mt-28 max-[1000px]:grid-cols-1">
       <div className="w-[80%] max-w-[500px] aspect-square relative mx-auto">
-        <NextImage src="/assets/images/home-page/hero.png" alt="Hero banner" />
+        <NextImage
+          src="/assets/images/home-page/hero.png"
+          alt="Hero banner"
+          priority
+        />
         <div className="hero-animation w-full h-full absolute -z-10 rounded-full transition"></div>
       </div>
 
-      <div className="flex flex-col justify-center">
+      <div className="w-[90%] mx-auto flex flex-col justify-center">
         <h1 className="capitalize dark:text-white text-[#000000c7] text-4xl leading-[60px] font-semibold font-josefin">
           Improve your online learning experience better instantly
         </h1>
@@ -34,25 +38,25 @@ const Hero: FC<Props> = (props): JSX.Element => {
         </div>
 
         <div className="mt-4 flex items-center gap-2">
-          <div className="w-[46px] aspect-square relative rounded-full overflow-hidden">
+          <div className="w-10 aspect-square relative rounded-full overflow-hidden">
             <NextImage
               src="/assets/images/home-page/client-1.jpg"
               alt="Client 1"
             />
           </div>
-          <div className="w-[46px] aspect-square relative rounded-full overflow-hidden -ml-5">
+          <div className="w-10 aspect-square relative rounded-full overflow-hidden -ml-5">
             <NextImage
               src="/assets/images/home-page/client-2.jpg"
               alt="Client 2"
             />
           </div>
-          <div className="w-[46px] aspect-square relative rounded-full overflow-hidden -ml-5">
+          <div className="w-10 aspect-square relative rounded-full overflow-hidden -ml-5">
             <NextImage
               src="/assets/images/home-page/client-3.jpg"
               alt="Client3"
             />
           </div>
-          <p className="font-josefin">
+          <p className="font-josefin text-slate-700 dark:text-white">
             500K+ People already trusted us.{" "}
             <Link
               href="/"

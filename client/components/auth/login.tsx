@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import {
@@ -11,14 +11,17 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "../form-input";
-import BtnWithIcon from "../btn-with-icon";
+import BtnWithLoading from "../btn-with-loading";
+import { useLoginMutation } from "@/store/auth/auth-api";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email("Your email is invalid!")
-    .required("Please enter your email!"),
+    .email("Your email is invalid")
+    .required("Please enter your email"),
   password: Yup.string()
-    .required("Please enter you password!")
+    .required("Please enter you password")
     .min(6, "Password must has at least 6 characters"),
 });
 
@@ -33,7 +36,8 @@ interface FormValues {
 }
 
 const Login: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [login, { isLoading, isSuccess, error }] = useLoginMutation();
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -43,11 +47,28 @@ const Login: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
     resolver: yupResolver(schema),
   });
 
-  const { register, handleSubmit, formState, watch, reset } = form;
+  const { register, handleSubmit, formState } = form;
 
-  const { errors, isSubmitting, isSubmitSuccessful } = formState;
+  const { errors } = formState;
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: FormValues) => {
+    console.log("alds");
+    await login(data);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login successfully!");
+      setOpenModal(false);
+    }
+
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+      }
+    }
+  }, [isSuccess, error]);
 
   return (
     <div>
@@ -65,16 +86,16 @@ const Login: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
           <FormInput
             id="password"
             label="Password"
-            type={show ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             register={register("password")}
             errorMsg={errors.password?.message}
             placeholder="At least 6 characters"
           />
           <div
             className="absolute right-3 top-9 cursor-pointer"
-            onClick={() => setShow((prev) => !prev)}
+            onClick={() => setShowPassword((prev) => !prev)}
           >
-            {show ? (
+            {showPassword ? (
               <AiOutlineEyeInvisible size={20} />
             ) : (
               <AiOutlineEye size={20} />
@@ -82,20 +103,29 @@ const Login: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
           </div>
         </div>
 
-        <BtnWithIcon content="LOG IN" customClasses="w-full mt-6 !py-3" />
+        <BtnWithLoading
+          content="LOGIN"
+          isLoading={isLoading}
+          customClasses="mt-6 w-full"
+        />
 
         <p className="mt-8 mb-2 text-center">Or join with</p>
         <div className="flex items-center justify-center gap-x-2">
-          <FcGoogle size={30} className="cursor-pointer" />
-          <AiFillGithub size={30} className="cursor-pointer" />
+          <FcGoogle
+            size={30}
+            className="cursor-pointer"
+            onClick={() => signIn("google")}
+          />
+          <AiFillGithub
+            size={30}
+            className="cursor-pointer"
+            onClick={() => signIn("github")}
+          />
         </div>
 
         <p className="text-center mt-8">
           Not have any account?
-          <span
-            className="text-secondary font-bold ml-2"
-            onClick={() => setRoute("signup")}
-          >
+          <span className="form-link" onClick={() => setRoute("signup")}>
             Sign up
           </span>
         </p>

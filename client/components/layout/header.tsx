@@ -1,13 +1,20 @@
 "use client";
 
-import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import NavItems from "./nav-items";
 import ThemeSwitcher from "./theme-switcher";
-import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import CustomModal from "../custom-modal";
 import Login from "../auth/login";
 import Signup from "../auth/signup";
+import Verification from "../auth/verification";
+import { useSelector } from "react-redux";
+import { signOut, useSession } from "next-auth/react";
+import { useLogoutQuery, useSocialAuthMutation } from "@/store/auth/auth-api";
+import toast from "react-hot-toast";
+import UserAvatar from "./user-avatar";
+import MobileSidebar from "./mobile-sidebar";
+import Logo from "./logo";
 
 interface Props {}
 
@@ -16,6 +23,13 @@ const Header: FC<Props> = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [route, setRoute] = useState("");
   const [openModal, setOpenModal] = useState(false);
+
+  const { user } = useSelector((state: any) => state.auth);
+  const { data } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+
+  const [logout, setLogout] = useState(false);
+  const {} = useLogoutQuery(undefined, { skip: !logout ? true : false });
 
   const openLoginModal = () => {
     setOpenModal(true);
@@ -36,6 +50,28 @@ const Header: FC<Props> = (): JSX.Element => {
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
+  useEffect(() => {
+    if (!user) {
+      if (data) {
+        socialAuth({
+          email: data?.user?.email,
+          name: data?.user?.name,
+          avatar: data?.user?.image,
+        });
+      }
+    }
+
+    if (data === null) {
+      setLogout(true);
+    }
+  }, [data, user]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login successfully!");
+    }
+  }, [isSuccess]);
+
   return (
     <div className="w-full relative">
       <div
@@ -46,12 +82,7 @@ const Header: FC<Props> = (): JSX.Element => {
         } z-[80] fixed top-0 left-0 right-0 bg-white dark:bg-transparent transition duration-500 border-b`}
       >
         <div className="container flex items-center justify-between">
-          <Link
-            href="/"
-            className={`text-[25px] font-josefin font-medium text-black dark:text-white py-4`}
-          >
-            Elearning
-          </Link>
+          <Logo />
 
           <div className="flex items-center">
             <NavItems />
@@ -62,40 +93,22 @@ const Header: FC<Props> = (): JSX.Element => {
               onClick={() => setOpen(true)}
             >
               <HiOutlineMenuAlt3
-                size={20}
-                className="dark:text-white text-black cursor-pointer"
+                size={21}
+                className="dark:text-white text-slate-700 cursor-pointer -mt-1"
               />
             </div>
 
-            <HiOutlineUserCircle
-              size={20}
-              className="dark:text-white text-black cursor-pointer max-[800px]:hidden block mx-[14px]"
-              onClick={openLoginModal}
-            />
+            {/* Avatar */}
+            <UserAvatar openLoginModal={openLoginModal} />
           </div>
         </div>
 
         {/* Mobile Sidebar */}
-        <div
-          className={`fixed h-screen top-0 left-0 w-full z-[9999] dark:bg-[unset] bg-[#00000024] transition duration-500 ${
-            open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
-          }`}
-          onClick={() => setOpen(false)}
-        >
-          <div className="w-[70%] fixed z-[9999] h-screen bg-white dark:bg-slate-900 top-0 right-0 pb-5 text-center flex flex-col justify-between">
-            <div className="flex flex-col justify-center flex-1">
-              <NavItems isMobile />
-              <HiOutlineUserCircle
-                size={20}
-                className="dark:text-white text-black cursor-pointer mx-auto mt-4"
-                onClick={openLoginModal}
-              />
-            </div>
-            <p className="mt-auto text-sm">
-              Elearning 2023 &copy; All rights reserved
-            </p>
-          </div>
-        </div>
+        <MobileSidebar
+          open={open}
+          setOpen={setOpen}
+          openLoginModal={openLoginModal}
+        />
       </div>
 
       {openModal && (
@@ -115,6 +128,15 @@ const Header: FC<Props> = (): JSX.Element => {
               setOpenModal={setOpenModal}
               setRoute={setRoute}
               Component={Signup}
+            />
+          )}
+
+          {route === "verification" && (
+            <CustomModal
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+              setRoute={setRoute}
+              Component={Verification}
             />
           )}
         </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import {
@@ -11,17 +11,20 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "../form-input";
-import BtnWithIcon from "../btn-with-icon";
+import { useRegisterUserMutation } from "@/store/auth/auth-api";
+import toast from "react-hot-toast";
+import { ImSpinner } from "react-icons/im";
+import BtnWithLoading from "../btn-with-loading";
 
 const schema = Yup.object().shape({
   name: Yup.string()
-    .required("Please enter your name!")
+    .required("Please enter your name")
     .min(2, "Name must has at least 2 characters"),
   email: Yup.string()
-    .email("Your email is invalid!")
-    .required("Please enter your email!"),
+    .email("Your email is invalid")
+    .required("Please enter your email"),
   password: Yup.string()
-    .required("Please enter you password!")
+    .required("Please enter you password")
     .min(6, "Password must has at least 6 characters"),
 });
 
@@ -37,7 +40,9 @@ interface FormValues {
 }
 
 const Signup: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [registerUser, { data: responseData, isLoading, error, isSuccess }] =
+    useRegisterUserMutation();
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -48,11 +53,28 @@ const Signup: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
     resolver: yupResolver(schema),
   });
 
-  const { register, handleSubmit, formState, watch, reset } = form;
+  const { register, handleSubmit, formState, reset } = form;
 
-  const { errors, isSubmitting, isSubmitSuccessful } = formState;
+  const { errors } = formState;
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: FormValues) => {
+    await registerUser(data);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      const message = responseData?.message || "Registered successfully!";
+      toast.success(message);
+      setRoute("verification");
+    }
+
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+      }
+    }
+  }, [isSuccess, error]);
 
   return (
     <div>
@@ -78,16 +100,16 @@ const Signup: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
           <FormInput
             id="password"
             label="Password"
-            type={show ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             register={register("password")}
             errorMsg={errors.password?.message}
             placeholder="At least 6 characters"
           />
           <div
             className="absolute right-3 top-9 cursor-pointer"
-            onClick={() => setShow((prev) => !prev)}
+            onClick={() => setShowPassword((prev) => !prev)}
           >
-            {show ? (
+            {showPassword ? (
               <AiOutlineEyeInvisible size={20} />
             ) : (
               <AiOutlineEye size={20} />
@@ -95,7 +117,7 @@ const Signup: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
           </div>
         </div>
 
-        <BtnWithIcon content="LOG IN" customClasses="w-full mt-6 !py-3" />
+        <BtnWithLoading content="SIGNUP" isLoading={isLoading} />
 
         <p className="mt-8 mb-2 text-center">Or join with</p>
         <div className="flex items-center justify-center gap-x-2">
@@ -104,12 +126,9 @@ const Signup: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
         </div>
 
         <p className="text-center mt-8">
-          Not have any account?
-          <span
-            className="text-secondary font-bold ml-2"
-            onClick={() => setRoute("signup")}
-          >
-            Sign up
+          Already have an account?
+          <span className="form-link" onClick={() => setRoute("login")}>
+            Sign in
           </span>
         </p>
       </form>

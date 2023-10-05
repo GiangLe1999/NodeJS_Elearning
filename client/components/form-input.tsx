@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { AiOutlineWarning } from "react-icons/ai";
 
@@ -8,11 +8,15 @@ interface Props {
   id: string;
   type?: string;
   label: string;
-  register: UseFormRegisterReturn<string>;
+  register?: UseFormRegisterReturn<string>;
   errorMsg?: string | undefined;
   textarea?: boolean;
   rows?: number;
   placeholder?: string;
+  disabled?: boolean;
+  value?: any;
+  readOnly?: boolean;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const FormInput: FC<Props> = ({
@@ -24,6 +28,10 @@ const FormInput: FC<Props> = ({
   textarea,
   rows,
   placeholder,
+  disabled,
+  value,
+  readOnly,
+  onChange,
 }): JSX.Element => {
   let Component: any = "input";
   if (textarea) Component = "textarea";
@@ -36,9 +44,15 @@ const FormInput: FC<Props> = ({
         id={id}
         type={type || "text"}
         {...register}
-        className="w-full outline-none border bg-[#f5f5f5] dark:bg-transparent rounded-[5px] py-[10px] px-4"
+        className={`w-full outline-none border bg-[#f5f5f5] dark:bg-transparent rounded-[5px] py-[10px] px-4 ${
+          disabled && "opacity-50"
+        }`}
         rows={rows}
         placeholder={placeholder}
+        disabled={disabled}
+        value={value}
+        readOnly={readOnly}
+        onChange={onChange}
       />
       {errorMsg && (
         <p className="text-xs text-red-700 mt-1 flex items-center gap-[2px]">

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const NavItems: FC<Props> = ({ isMobile }): JSX.Element => {
-  const pathName = usePathname();
+  const pathName = usePathname() as string;
   const route = pathName.split("/")[1];
 
   return (
@@ -19,8 +19,8 @@ const NavItems: FC<Props> = ({ isMobile }): JSX.Element => {
             className={`${
               pathName === item.url ||
               (item.url.includes(route) && route.length > 1)
-                ? "dark:text-secondary text-tertiary font-bold"
-                : "dark:text-white text-black"
+                ? "dark:text-secondary text-tertiary font-bold underline"
+                : "dark:text-white text-slate-700"
             } text-lg px-6 font-josefin leading-none`}
           >
             {item.name}

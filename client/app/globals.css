@@ -11,6 +11,10 @@
   @apply dark:bg-gradient-to-b dark:from-gray-900 dark:to-black;
 }
 
+.block-wrapper {
+  @apply bg-white dark:bg-slate-900 text-slate-700 dark:text-white bg-opacity-90 dark:border-[#ffffff1d] border rounded-[5px] shadow-sm dark:shadow-sm;
+}
+
 @keyframes changeBackgroundColor {
   0%,
   100% {
@@ -34,19 +38,81 @@
 }
 
 .hero-animation {
-  @apply bg-[linear-gradient(_147.92deg,#dc143c_10.41%,hsla(0,0%,100%,0)_89.25%_)] dark:bg-[linear-gradient(_147.92deg,#39c1d3_10.41%,hsla(0,0%,100%,0)_89.25%_)] animate-[changeBackgroundColor_8s_infinite];
+  @apply bg-[linear-gradient(_147.92deg,#1e293b_10.41%,hsla(0,0%,100%,0)_89.25%_)] dark:bg-[linear-gradient(_147.92deg,#39c1d3_10.41%,hsla(0,0%,100%,0)_89.25%_)] animate-[changeBackgroundColor_8s_infinite];
 }
 
 /* Button */
 .primary-btn {
-  @apply py-2 px-4 flex items-center justify-center gap-x-1 rounded-[5px] dark:bg-secondary bg-tertiary text-white font-bold;
+  @apply py-[10px] px-4 flex items-center justify-center gap-x-1 rounded-[5px] dark:bg-secondary bg-tertiary text-white font-bold;
 }
 
 /* Form */
 .form-title {
-  @apply text-[25px] text-black dark:text-white font-medium text-center py-2;
+  @apply text-[25px] text-slate-700 dark:text-white font-medium text-center py-2;
 }
 
 .form-input-label {
-  @apply text-sm text-black dark:text-white font-bold;
+  @apply text-sm text-slate-600 dark:text-white font-bold;
+}
+
+.form-link {
+  @apply dark:text-secondary text-tertiary font-bold ml-2 cursor-pointer;
+}
+
+/* Validate OTP Form */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-2px);
+  }
+  40% {
+    transform: translateX(2px);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.validate-inputs {
+  @apply w-[74%] mx-auto mt-6;
+}
+
+.validate-inputs > div {
+  @apply !w-full !grid !grid-cols-4 h-[65px] gap-3;
+}
+
+.validate-inputs input {
+  @apply !w-full aspect-square bg-transparent !border-[3px] dark:border-white border-[#0000004a] rounded-[10px] text-slate-700 dark:text-white text-xl outline-none;
+}
+
+/* Admin page */
+.admin-nav-title {
+  @apply !text-lg !font-josefin text-slate-800 dark:text-[#ffffffc1] capitalize !font-normal border-b border-slate-600;
+}
+
+/* Scroll bar */
+::-webkit-scrollbar {
+  @apply w-[6px] cursor-pointer;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-500;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-tertiary;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-700 transition;
 }

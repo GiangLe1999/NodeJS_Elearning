@@ -1,7 +1,10 @@
 import ThemeProvider from "@/components/theme-provider";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Poppins, Josefin_Sans } from "next/font/google";
+import { Josefin_Sans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import { StoreProvider } from "@/store/store-provider";
+import UserSessionProvider from "@/components/user-session-provider";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -20,14 +23,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={`${josefin.className} bg-white dark-bg bg-no-repeat bg-cover transition h-full`}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <UserSessionProvider>
+          <body
+            className={`${josefin.className} bg-white dark-bg bg-no-repeat bg-cover transition h-full`}
+          >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <Toaster position="bottom-center" reverseOrder={false} />
+            </ThemeProvider>
+          </body>
+        </UserSessionProvider>
+      </html>
+    </StoreProvider>
   );
 }
