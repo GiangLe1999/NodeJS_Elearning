@@ -75,6 +75,7 @@ const Verification: FC<Props> = ({ setRoute }): JSX.Element => {
         content="Verify OTP"
         isLoading={isLoading}
         customClasses="my-6 !w-[74%] mx-auto"
+        type="submit"
       />
 
       <p className="text-center pt-4 text-slate-700 dark:text-white">

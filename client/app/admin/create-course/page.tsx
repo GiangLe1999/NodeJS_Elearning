@@ -1,6 +1,4 @@
-"use client";
-
-import DashboardHero from "@/components/admin-pages/dashboard-page/dashboard-hero";
+import CreateCourseForm from "@/components/admin-pages/create-course-page/create-course-form";
 import Heading from "@/components/heading";
 import { NextPage } from "next";
 
@@ -10,10 +8,10 @@ const page: NextPage<Props> = () => {
   return (
     <>
       <Heading
-        title="Admin Dashboard | E-Learning"
+        title="Create Courses | E-Learning"
         description="E-Learning Dashboard for admin of E-Learning Platform"
       />
-      <DashboardHero />
+      <CreateCourseForm />
     </>
   );
 };

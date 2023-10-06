@@ -117,7 +117,7 @@ const Signup: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
           </div>
         </div>
 
-        <BtnWithLoading content="SIGNUP" isLoading={isLoading} />
+        <BtnWithLoading content="SIGNUP" isLoading={isLoading} type="submit" />
 
         <p className="mt-8 mb-2 text-center">Or join with</p>
         <div className="flex items-center justify-center gap-x-2">

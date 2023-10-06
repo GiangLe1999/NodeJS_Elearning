@@ -50,7 +50,7 @@ export const authApi = apiSlice.injectEndpoints({
           const result = await queryFulfilled;
           dispatch(
             userLogin({
-              accessToken: result.data.activationToken,
+              accessToken: result.data.accessToken,
               user: result.data.user,
             })
           );
@@ -84,10 +84,10 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 
     // Logout
-    logout: builder.query({
+    logout: builder.mutation({
       query: () => ({
         url: "logout",
-        method: "GET",
+        method: "POST",
         credentials: "include" as const,
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
@@ -107,5 +107,5 @@ export const {
   useActivationMutation,
   useLoginMutation,
   useSocialAuthMutation,
-  useLogoutQuery,
+  useLogoutMutation,
 } = authApi;

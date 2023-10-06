@@ -24,8 +24,8 @@ export default function RootLayout({
 }) {
   return (
     <StoreProvider>
-      <html lang="en">
-        <UserSessionProvider>
+      <UserSessionProvider>
+        <html lang="en">
           <body
             className={`${josefin.className} bg-white dark-bg bg-no-repeat bg-cover transition h-full`}
           >
@@ -34,8 +34,8 @@ export default function RootLayout({
               <Toaster position="bottom-center" reverseOrder={false} />
             </ThemeProvider>
           </body>
-        </UserSessionProvider>
-      </html>
+        </html>
+      </UserSessionProvider>
     </StoreProvider>
   );
 }

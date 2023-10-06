@@ -170,18 +170,19 @@ const AdminSidebar: FC<Props> = (props): JSX.Element | null => {
             >
               {!isCollapsed && "E-Learning"}
             </Typography>
-            <Item
-              title="Live Website"
-              to="/"
-              icon={<Public />}
-              selected={selected}
-              setSelected={setSelected}
-            />
 
             <Item
               title="Dashboard"
               to="/admin"
               icon={<HomeOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Live Website"
+              to="/"
+              icon={<Public />}
               selected={selected}
               setSelected={setSelected}
             />

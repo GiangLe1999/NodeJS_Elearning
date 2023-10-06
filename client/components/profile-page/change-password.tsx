@@ -48,7 +48,6 @@ const ChangePassword: FC<Props> = (props): JSX.Element => {
     useUpdatePasswordMutation();
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
     await updatePassword(data);
   };
 

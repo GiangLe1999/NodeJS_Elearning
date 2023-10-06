@@ -9,8 +9,8 @@ import Login from "../auth/login";
 import Signup from "../auth/signup";
 import Verification from "../auth/verification";
 import { useSelector } from "react-redux";
-import { signOut, useSession } from "next-auth/react";
-import { useLogoutQuery, useSocialAuthMutation } from "@/store/auth/auth-api";
+import { useSession } from "next-auth/react";
+import { useSocialAuthMutation } from "@/store/auth/auth-api";
 import toast from "react-hot-toast";
 import UserAvatar from "./user-avatar";
 import MobileSidebar from "./mobile-sidebar";
@@ -26,10 +26,8 @@ const Header: FC<Props> = (): JSX.Element => {
 
   const { user } = useSelector((state: any) => state.auth);
   const { data } = useSession();
-  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
-  const [logout, setLogout] = useState(false);
-  const {} = useLogoutQuery(undefined, { skip: !logout ? true : false });
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
   const openLoginModal = () => {
     setOpenModal(true);
@@ -59,10 +57,6 @@ const Header: FC<Props> = (): JSX.Element => {
           avatar: data?.user?.image,
         });
       }
-    }
-
-    if (data === null) {
-      setLogout(true);
     }
   }, [data, user]);
 

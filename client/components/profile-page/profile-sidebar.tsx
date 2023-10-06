@@ -1,9 +1,11 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { profileItemsData } from "@/data/profile-items";
 import { signOut } from "next-auth/react";
 import LoggedinUserAvatar from "../loggedin-user-avatar";
 import useIsAdmin from "@/hooks/useIsAdmin";
 import Link from "next/link";
+import { useLogoutMutation } from "@/store/auth/auth-api";
+import { useRouter } from "next/navigation";
 
 interface Props {
   active: number;
@@ -15,10 +17,14 @@ const common =
 
 const ProfileSidebar: FC<Props> = ({ active, setActive }): JSX.Element => {
   const isAdmin = useIsAdmin();
-  console.log(isAdmin);
+  const router = useRouter();
+
+  const [logout] = useLogoutMutation();
 
   const logoutHandler = async () => {
-    await signOut();
+    await signOut({ redirect: false });
+    await logout({});
+    router.push("/");
   };
 
   return (

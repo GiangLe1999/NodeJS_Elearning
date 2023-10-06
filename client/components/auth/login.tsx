@@ -21,7 +21,7 @@ const schema = Yup.object().shape({
     .email("Your email is invalid")
     .required("Please enter your email"),
   password: Yup.string()
-    .required("Please enter you password")
+    .required("Please enter your password")
     .min(6, "Password must has at least 6 characters"),
 });
 
@@ -52,7 +52,7 @@ const Login: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
   const { errors } = formState;
 
   const onSubmit = async (data: FormValues) => {
-    console.log("alds");
+    console.log(data);
     await login(data);
   };
 
@@ -107,6 +107,7 @@ const Login: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
           content="LOGIN"
           isLoading={isLoading}
           customClasses="mt-6 w-full"
+          type="submit"
         />
 
         <p className="mt-8 mb-2 text-center">Or join with</p>
