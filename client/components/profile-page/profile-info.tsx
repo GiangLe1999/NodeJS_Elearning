@@ -84,7 +84,7 @@ const ProfileInfo: FC<Props> = (props): JSX.Element => {
           />
           <label
             htmlFor="avatar"
-            className="absolute w-8 h-8 bg-slate-500 dark:bg-slate-800 text-white rounded-full bottom-2 right-0 grid place-items-center border cursor-pointer hover:scale-105 transition"
+            className="absolute w-8 h-8 bg-slate-500 dark:bg-tertiary text-white rounded-full bottom-2 right-0 grid place-items-center border cursor-pointer hover:scale-105 transition"
           >
             <AiOutlineCamera className="z-1" size={20} />
           </label>

@@ -18,16 +18,18 @@ import Logo from "./logo";
 
 interface Props {}
 
-const Header: FC<Props> = (): JSX.Element => {
+const Header: FC<Props> = (): JSX.Element | null => {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(false);
   const [route, setRoute] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
-  const { user } = useSelector((state: any) => state.auth);
+  const { user, token } = useSelector((state: any) => state.auth);
   const { data } = useSession();
 
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+
+  const [hasMounted, setHasMounted] = useState(false);
 
   const openLoginModal = () => {
     setOpenModal(true);
@@ -65,6 +67,14 @@ const Header: FC<Props> = (): JSX.Element => {
       toast.success("Login successfully!");
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
 
   return (
     <div className="w-full relative">

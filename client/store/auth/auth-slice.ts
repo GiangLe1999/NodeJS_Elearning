@@ -20,9 +20,9 @@ export const authSlice = createSlice({
 
     userLogin: (
       state,
-      action: PayloadAction<{ accessToken: string; user: string }>
+      action: PayloadAction<{ token: string; user: string }>
     ) => {
-      state.token = action.payload.accessToken;
+      state.token = action.payload.token;
       state.user = action.payload.user;
     },
 

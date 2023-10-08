@@ -8,6 +8,7 @@ import { redis } from "../utils/redis";
 import mongoose from "mongoose";
 import { sendMail } from "../utils/sendMail";
 import NotificationModel from "../models/notification.model";
+import axios from "axios";
 
 // Upload course
 export const uploadCourse = CatchAsyncErrors(
@@ -406,6 +407,31 @@ export const deleteCourse = CatchAsyncErrors(
       res
         .status(200)
         .json({ success: true, message: "Course deleted successfully" });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// Generate Video URL
+export const generateVideoUrl = CatchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { videoId } = req.body;
+      const response = await axios.post(
+        `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
+        // ttl là Time to live: Thời gian cache
+        { ttl: 300 },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`,
+          },
+        }
+      );
+
+      res.json(response.data);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

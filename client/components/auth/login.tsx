@@ -16,13 +16,13 @@ import { useLoginMutation } from "@/store/auth/auth-api";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 
-const schema = Yup.object().shape({
+const schema = Yup.object({
   email: Yup.string()
     .email("Your email is invalid")
     .required("Please enter your email"),
   password: Yup.string()
-    .required("Please enter your password")
-    .min(6, "Password must has at least 6 characters"),
+    .min(6, "Password must has at least 6 characters")
+    .required("Please enter your password"),
 });
 
 interface Props {

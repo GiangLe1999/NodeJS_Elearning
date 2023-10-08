@@ -219,7 +219,7 @@ export const updateAccessToken = CatchAsyncErrors(
       // Expire after 7 days
       await redis.set(user._id, JSON.stringify(user), "EX", 604800);
 
-      res.status(200).json({ success: true, accessToken });
+      res.status(200).json({ success: true, user, accessToken });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

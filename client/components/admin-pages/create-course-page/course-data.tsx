@@ -5,6 +5,7 @@ import { AddCircle, RemoveCircle } from "@mui/icons-material";
 import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as yup from "yup";
+import BottomNavigator from "./bottom-navigator";
 
 type IValue = { title: string }[];
 
@@ -15,11 +16,14 @@ interface Props {
   setBenefits: Dispatch<SetStateAction<IValue>>;
   prerequisites: IValue;
   setPrerequisites: Dispatch<SetStateAction<IValue>>;
+  forWho: IValue;
+  setForWho: Dispatch<SetStateAction<IValue>>;
 }
 
 type CourseDataValues = {
   benefits: IValue;
   prerequisites: IValue;
+  forWho: IValue;
 };
 
 const schema: any = yup.object({
@@ -37,6 +41,13 @@ const schema: any = yup.object({
       })
     )
   ),
+  forWho: yup.lazy(() =>
+    yup.array().of(
+      yup.object({
+        title: yup.string().required("Please fill this field first"),
+      })
+    )
+  ),
 });
 
 const CourseData: FC<Props> = ({
@@ -46,11 +57,14 @@ const CourseData: FC<Props> = ({
   setPrerequisites,
   benefits,
   prerequisites,
+  forWho,
+  setForWho,
 }): JSX.Element => {
   const form = useForm<CourseDataValues>({
     defaultValues: {
       benefits: [{ title: "" }],
       prerequisites: [{ title: "" }],
+      forWho: [{ title: "" }],
     },
     resolver: yupResolver(schema),
   });
@@ -76,6 +90,15 @@ const CourseData: FC<Props> = ({
     control,
   });
 
+  const {
+    fields: forWhoFields,
+    append: forWhoAppend,
+    remove: forWhoRemove,
+  } = useFieldArray({
+    name: "forWho",
+    control,
+  });
+
   const backHandler = () => {
     setActive(active - 1);
   };
@@ -84,11 +107,13 @@ const CourseData: FC<Props> = ({
     setActive(active + 1);
     setBenefits(data.benefits);
     setPrerequisites(data.prerequisites);
+    setForWho(data.forWho);
   };
 
   useEffect(() => {
     setValue("benefits", benefits);
     setValue("prerequisites", prerequisites);
+    setValue("forWho", forWho);
   }, [active]);
 
   return (
@@ -164,19 +189,39 @@ const CourseData: FC<Props> = ({
         </button>
       </div>
 
-      <div className="flex justify-between mt-12">
-        <BtnWithIcon
-          content="PREV"
-          customClasses="!bg-blue-500"
+      {/* Who is this course for */}
+      <h2 className="text-xl font-bold mb-4 mt-12">Who is this course for?</h2>
+      <div className="">
+        {forWhoFields.map((field, index) => (
+          <div className="relative" key={field.id}>
+            <FormInput
+              id="forWho"
+              label={`Who is this course for ${index + 1}`}
+              register={register(`forWho.${index}.title` as const)}
+              placeholder="This course are for those who want to live life with fitness"
+              errorMsg={errors?.forWho?.[index]?.title?.message}
+            />
+            {index > 0 && (
+              <button
+                type="button"
+                onClick={() => forWhoRemove(index)}
+                className="absolute top-0 right-0 flex items-center gap-1 text-sm"
+              >
+                <RemoveCircle style={{ fontSize: "15px" }} /> Remove this
+              </button>
+            )}
+          </div>
+        ))}
+        <button
           type="button"
-          onClick={backHandler}
-        />
-        <BtnWithIcon
-          content="NEXT"
-          customClasses="!bg-blue-500"
-          type="submit"
-        />
+          onClick={() => forWhoAppend({ title: "" })}
+          className="flex items-center gap-1"
+        >
+          <AddCircle /> Add more
+        </button>
       </div>
+
+      <BottomNavigator backHandler={backHandler} />
     </form>
   );
 };

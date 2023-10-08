@@ -3,10 +3,11 @@
 import DashboardHero from "@/components/admin-pages/dashboard-page/dashboard-hero";
 import Heading from "@/components/heading";
 import { NextPage } from "next";
+import { useEffect, useState } from "react";
 
 interface Props {}
 
-const page: NextPage<Props> = () => {
+const DashboardPage: NextPage<Props> = () => {
   return (
     <>
       <Heading
@@ -18,4 +19,4 @@ const page: NextPage<Props> = () => {
   );
 };
 
-export default page;
+export default DashboardPage;

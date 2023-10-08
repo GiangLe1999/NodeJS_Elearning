@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import BtnWithIcon from "@/components/btn-with-icon";
+import BottomNavigator from "./bottom-navigator";
 
 interface Props {
   active: number;
@@ -216,11 +217,7 @@ const CourseInfomation: FC<Props> = ({
           onChange={fileChangeHandler}
         />
 
-        <BtnWithIcon
-          type="submit"
-          content="NEXT"
-          customClasses="!bg-blue-500 mt-4 ml-auto"
-        />
+        <BottomNavigator onlyNext customClasses="mt-4" />
       </form>
     </div>
   );

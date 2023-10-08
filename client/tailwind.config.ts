@@ -13,7 +13,7 @@ const config: Config = {
         josefin: ["var(--font-Josefin)"],
       },
       colors: {
-        secondary: "#39c1d3",
+        secondary: "#0da5b5",
         tertiary: "#1e293b",
       },
     },

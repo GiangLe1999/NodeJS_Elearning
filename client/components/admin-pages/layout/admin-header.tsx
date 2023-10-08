@@ -22,47 +22,47 @@ const AdminHeader: FC<Props> = (props): JSX.Element => {
       </div>
 
       {open && (
-        <div className="w-[350px] h-[450px] dark:bg-[#111C43] bg-white shadow-xl absolute top-16 z-10 rounded">
+        <div className="w-[350px] h-[450px] dark:bg-[#111C43] bg-white shadow-xl border dark:border-slate-700 absolute top-16 !z-50 rounded">
           <h5 className="text-center text-[20px] text-black dark:text-white p-3">
             Notifications
           </h5>
 
           <div className="dark:bg-[#2d3a4ea1] bg-[#00000013] border-b dark:border-b-[#ffffff47] border-b-[#0000000f]">
             <div className="w-full flex items-center justify-between p-2">
-              <p className="text-slate-800 dark:text-white">
+              <p className="text-tertiary dark:text-white">
                 New Question Received
               </p>
-              <p className="text-slate-800 dark:text-white cursor-pointer">
+              <p className="text-tertiary dark:text-white cursor-pointer">
                 Mark as read
               </p>
             </div>
 
-            <p className="px-2 text-slate-800 dark:text-white text-sm">
+            <p className="px-2 text-tertiary dark:text-white text-sm">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
               culpa iste atque iure mollitia eos, et exercitationem deleniti
               voluptates in.
             </p>
-            <p className="p-2 text-slate-800 dark:text-white text-sm">
+            <p className="p-2 text-tertiary dark:text-white text-sm">
               5 days ago
             </p>
           </div>
 
           <div className="dark:bg-[#2d3a4ea1] bg-[#00000013] border-b dark:border-b-[#ffffff47] border-b-[#0000000f]">
             <div className="w-full flex items-center justify-between p-2">
-              <p className="text-slate-800 dark:text-white">
+              <p className="text-tertiary dark:text-white">
                 New Question Received
               </p>
-              <p className="text-slate-800 dark:text-white cursor-pointer">
+              <p className="text-tertiary dark:text-white cursor-pointer">
                 Mark as read
               </p>
             </div>
 
-            <p className="px-2 text-slate-800 dark:text-white text-sm">
+            <p className="px-2 text-tertiary dark:text-white text-sm">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
               culpa iste atque iure mollitia eos, et exercitationem deleniti
               voluptates in.
             </p>
-            <p className="p-2 text-slate-800 dark:text-white text-sm">
+            <p className="p-2 text-tertiary dark:text-white text-sm">
               5 days ago
             </p>
           </div>

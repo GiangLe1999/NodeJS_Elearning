@@ -1,10 +1,14 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import CourseInfomation from "./course-infomation";
 import CourseOptions from "./course-options";
 import CourseData from "./course-data";
 import CourseContent from "./course-content";
+import CoursePreview from "./course-preview";
+import { useCreateCourseMutation } from "@/store/course/course-api";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 interface Props {}
 
@@ -35,11 +39,23 @@ const initialCourseContentData = [
     videoUrl: "",
     title: "",
     description: "",
-    videoSection: "Untitiled Section",
+    videoSection: "Untitled Section",
     links: [{ title: "", url: "" }],
     suggestion: "",
   },
 ];
+
+export type CourseContentDataType = {
+  videoUrl: string;
+  title: string;
+  description: string;
+  videoSection: string;
+  links: {
+    title: string;
+    url: string;
+  }[];
+  suggestion: string;
+}[];
 
 const CreateCourseForm: FC<Props> = (props): JSX.Element => {
   const [active, setActive] = useState(0);
@@ -48,12 +64,50 @@ const CreateCourseForm: FC<Props> = (props): JSX.Element => {
 
   const [benefits, setBenefits] = useState([{ title: "" }]);
   const [prerequisites, setPrerequisites] = useState([{ title: "" }]);
+  const [forWho, setForWho] = useState([{ title: "" }]);
 
   const [courseContentData, setCourseContentData] = useState(
     initialCourseContentData
   );
 
   const [courseData, setCourseData] = useState({});
+
+  const submitHandler = async () => {
+    const data = {
+      ...courseInfo,
+      totalVideos: courseContentData.length,
+      benefits,
+      prerequisites,
+      forWho,
+      courseContent: courseContentData,
+    };
+
+    setCourseData(data);
+  };
+
+  const [createCourse, { isLoading, isSuccess, error }] =
+    useCreateCourseMutation();
+
+  const createCourseHandler = async () => {
+    const data = courseData;
+    if (!isLoading) {
+      await createCourse(data);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Created Course Successfully!");
+      redirect("/admin/all-courses");
+    }
+
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData.data.message);
+      }
+    }
+  }, [isLoading, isSuccess, error]);
 
   return (
     <div className="flex">
@@ -75,6 +129,8 @@ const CreateCourseForm: FC<Props> = (props): JSX.Element => {
             setBenefits={setBenefits}
             prerequisites={prerequisites}
             setPrerequisites={setPrerequisites}
+            forWho={forWho}
+            setForWho={setForWho}
           />
         )}
 
@@ -84,6 +140,16 @@ const CreateCourseForm: FC<Props> = (props): JSX.Element => {
             setActive={setActive}
             courseContentData={courseContentData}
             setCourseContentData={setCourseContentData}
+            submitCourseHandler={submitHandler}
+          />
+        )}
+
+        {active === 3 && (
+          <CoursePreview
+            active={active}
+            setActive={setActive}
+            courseData={courseData}
+            createCourseHandler={createCourseHandler}
           />
         )}
       </div>

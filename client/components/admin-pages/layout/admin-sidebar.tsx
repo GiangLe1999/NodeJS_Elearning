@@ -50,12 +50,17 @@ const Item: FC<itemProps> = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-interface Props {}
+interface Props {
+  isCollapsed: boolean;
+  setIsCollapsed: Dispatch<SetStateAction<boolean>>;
+}
 
-const AdminSidebar: FC<Props> = (props): JSX.Element | null => {
+const AdminSidebar: FC<Props> = ({
+  isCollapsed,
+  setIsCollapsed,
+}): JSX.Element | null => {
   const user = useUserInfo();
   const [logout, setLogout] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -121,7 +126,7 @@ const AdminSidebar: FC<Props> = (props): JSX.Element | null => {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <h3 className="text-[28px] uppercase dark:text-white text-slate-800">
+                <h3 className="text-[28px] uppercase dark:text-white text-tertiary">
                   E-Learning
                 </h3>
 
@@ -129,7 +134,7 @@ const AdminSidebar: FC<Props> = (props): JSX.Element | null => {
                   onClick={() => setIsCollapsed(!isCollapsed)}
                   className="inline-block !-mr-6 !-mt-[6px]"
                 >
-                  <ArrowBackIos className="text-slate-800 dark:text-[#ffffffc1]" />
+                  <ArrowBackIos className="text-tertiary dark:text-[#ffffffc1]" />
                 </IconButton>
               </Box>
             )}
@@ -146,14 +151,14 @@ const AdminSidebar: FC<Props> = (props): JSX.Element | null => {
               <Box textAlign="center">
                 <Typography
                   variant="h4"
-                  className="!text-lg text-slate-800 dark:text-[#ffffffc1] !font-josefin"
+                  className="!text-lg text-tertiary dark:text-[#ffffffc1] !font-josefin"
                   sx={{ m: "10px 0 0 0" }}
                 >
                   {user?.name}
                 </Typography>
                 <Typography
                   variant="h6"
-                  className="!text-base text-slate-800 dark:text-[#ffffffc1] capitalize !font-josefin flex items-center justify-center gap-1"
+                  className="!text-base text-tertiary dark:text-[#ffffffc1] capitalize !font-josefin flex items-center justify-center gap-1"
                   sx={{ m: "10px 0 0 0" }}
                 >
                   <AdminPanelSettings /> {user?.role}

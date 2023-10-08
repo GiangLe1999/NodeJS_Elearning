@@ -32,7 +32,7 @@ const ProfileSidebar: FC<Props> = ({ active, setActive }): JSX.Element => {
       <div
         className={`w-full py-4 flex items-center gap-x-2 px-3 rounded-t-[5px] cursor-pointer ${
           active === 1
-            ? "bg-slate-600 dark:bg-slate-800 text-white"
+            ? "bg-slate-600 dark:bg-tertiary text-white"
             : "bg-transparent"
         }`}
         onClick={() => setActive(1)}
@@ -51,7 +51,7 @@ const ProfileSidebar: FC<Props> = ({ active, setActive }): JSX.Element => {
               href="/admin"
               className={`${common} ${
                 active === 4
-                  ? "bg-slate-600 dark:bg-slate-800 text-white"
+                  ? "bg-slate-600 dark:bg-tertiary text-white"
                   : "bg-transparent"
               }`}
               key={2}
@@ -68,7 +68,7 @@ const ProfileSidebar: FC<Props> = ({ active, setActive }): JSX.Element => {
           <div
             className={`${common} ${
               active === index + 2
-                ? "bg-slate-600 dark:bg-slate-800 text-white"
+                ? "bg-slate-600 dark:bg-tertiary text-white"
                 : "bg-transparent"
             }`}
             key={index}
