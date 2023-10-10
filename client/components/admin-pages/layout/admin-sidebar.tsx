@@ -63,7 +63,7 @@ const AdminSidebar: FC<Props> = ({
   const [logout, setLogout] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -89,10 +89,10 @@ const AdminSidebar: FC<Props> = ({
           marginTop: "-2px !important",
         },
         "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
+          color: theme === "dark" ? "#7777ff !important" : "#3e4396 !important",
         },
         "& .pro-menu-item.active": {
-          color: "#6870fa !important",
+          color: theme === "dark" ? "#7777ff !important" : "#3e4396 !important",
         },
         "& .pro-inner-item": {
           padding: "5px 35px 5px 20px !important",
@@ -126,7 +126,7 @@ const AdminSidebar: FC<Props> = ({
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <h3 className="text-[28px] uppercase dark:text-white text-tertiary">
+                <h3 className="text-[28px] uppercase dark:text-white text-tertiary !font-josefin">
                   E-Learning
                 </h3>
 
@@ -143,7 +143,7 @@ const AdminSidebar: FC<Props> = ({
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <div className="w-[100px] h-[100px] relative border-[3px] border-[#5b6fe6] rounded-full">
+                <div className="w-[100px] h-[100px] relative border-[3px] border-slate-700 dark:border-[#5b6fe6] rounded-full">
                   <LoggedinUserAvatar />
                 </div>
               </Box>

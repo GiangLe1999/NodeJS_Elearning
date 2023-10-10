@@ -26,13 +26,13 @@ const BottomNavigator: FC<Props> = ({
     >
       <BtnWithIcon
         content="PREV"
-        customClasses={`!bg-blue-500 !rounded-sm ${onlyNext && "!hidden"}`}
+        customClasses={`!bg-[#3e4396] !rounded-sm ${onlyNext && "!hidden"}`}
         type="button"
         onClick={backHandler}
       />
       <BtnWithIcon
-        content={isCreate ? "CREATE" : "NEXT"}
-        customClasses={`!bg-blue-500 !rounded-sm ${onlyPrev && "!hidden"}`}
+        content={isCreate ? "CONFIRM" : "NEXT"}
+        customClasses={`!bg-[#3e4396] !rounded-sm ${onlyPrev && "!hidden"}`}
         type="submit"
         onClick={nextHandler}
       />

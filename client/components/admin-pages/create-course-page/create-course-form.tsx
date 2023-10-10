@@ -40,6 +40,7 @@ const initialCourseContentData = [
     title: "",
     description: "",
     videoSection: "Untitled Section",
+    videoLength: 0,
     links: [{ title: "", url: "" }],
     suggestion: "",
   },
@@ -50,6 +51,7 @@ export type CourseContentDataType = {
   title: string;
   description: string;
   videoSection: string;
+  videoLength: number;
   links: {
     title: string;
     url: string;
@@ -79,7 +81,7 @@ const CreateCourseForm: FC<Props> = (props): JSX.Element => {
       benefits,
       prerequisites,
       forWho,
-      courseContent: courseContentData,
+      courseData: courseContentData,
     };
 
     setCourseData(data);
@@ -98,7 +100,7 @@ const CreateCourseForm: FC<Props> = (props): JSX.Element => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Created Course Successfully!");
-      redirect("/admin/all-courses");
+      redirect("/admin/courses");
     }
 
     if (error) {
@@ -149,6 +151,7 @@ const CreateCourseForm: FC<Props> = (props): JSX.Element => {
             active={active}
             setActive={setActive}
             courseData={courseData}
+            courseContentData={courseContentData}
             createCourseHandler={createCourseHandler}
           />
         )}

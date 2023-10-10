@@ -12,10 +12,13 @@ type IValue = { title: string }[];
 interface Props {
   active: number;
   setActive: Dispatch<SetStateAction<number>>;
+  initialBenefits?: IValue;
   benefits: IValue;
   setBenefits: Dispatch<SetStateAction<IValue>>;
+  initialPrerequisites?: IValue;
   prerequisites: IValue;
   setPrerequisites: Dispatch<SetStateAction<IValue>>;
+  initialForWho?: IValue;
   forWho: IValue;
   setForWho: Dispatch<SetStateAction<IValue>>;
 }
@@ -59,6 +62,9 @@ const CourseData: FC<Props> = ({
   prerequisites,
   forWho,
   setForWho,
+  initialBenefits,
+  initialPrerequisites,
+  initialForWho,
 }): JSX.Element => {
   const form = useForm<CourseDataValues>({
     defaultValues: {
@@ -115,6 +121,20 @@ const CourseData: FC<Props> = ({
     setValue("prerequisites", prerequisites);
     setValue("forWho", forWho);
   }, [active]);
+
+  useEffect(() => {
+    if (initialBenefits && initialBenefits.length) {
+      setValue("benefits", initialBenefits);
+    }
+
+    if (initialPrerequisites && initialPrerequisites.length) {
+      setValue("prerequisites", initialPrerequisites);
+    }
+
+    if (initialForWho && initialForWho.length) {
+      setValue("forWho", initialForWho);
+    }
+  }, [initialBenefits, initialPrerequisites, initialForWho]);
 
   return (
     <form

@@ -7,5 +7,12 @@ export const formatShortDate = (ms: number) => {
     year: "numeric",
   };
 
-  return date.toLocaleDateString("en", options);
+  return date.toLocaleDateString("vi", options);
+};
+
+export const formatVideoLength = (totalMinutes: number) => {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  return `${hours} Hours ${minutes} Minutes`;
 };

@@ -2,7 +2,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import CoursePlayer from "../../course-player";
 import BtnWithIcon from "@/components/btn-with-icon";
 import DotSpan from "@/components/dot-span";
-import { formatShortDate } from "@/lib/format-data";
+import { formatShortDate, formatVideoLength } from "@/lib/format-data";
 import LoggedinUserAvatar from "@/components/loggedin-user-avatar";
 import useUserInfo from "@/hooks/useUserInfo";
 import { MdKey, MdLiveTv, MdOutlineSource } from "react-icons/md";
@@ -23,6 +23,7 @@ interface Props {
   active: number;
   setActive: Dispatch<SetStateAction<number>>;
   courseData: any;
+  courseContentData: any;
   createCourseHandler: () => void;
 }
 
@@ -30,6 +31,7 @@ const CoursePreview: FC<Props> = ({
   active,
   setActive,
   courseData,
+  courseContentData,
   createCourseHandler,
 }): JSX.Element => {
   const discountPercentage =
@@ -43,6 +45,13 @@ const CoursePreview: FC<Props> = ({
   const backHandler = () => {
     setActive(active - 1);
   };
+
+  const courseLength: number = courseContentData.reduce(
+    (acc: any, cur: any) => {
+      return acc + cur.videoLength;
+    },
+    0
+  );
 
   return (
     <div className="w-[85%] mx-auto py-5 my-12">
@@ -191,7 +200,9 @@ const CoursePreview: FC<Props> = ({
                 <CgTimelapse className="dark:text-secondary -mt-[2px]" />
                 Duration
               </span>
-              <span className="font-bold text-slate-500">23 Hours</span>
+              <span className="font-bold text-slate-500">
+                {formatVideoLength(courseLength)}
+              </span>
             </div>
 
             <div className="course-info-item">
@@ -252,6 +263,7 @@ const CoursePreview: FC<Props> = ({
       <BottomNavigator
         backHandler={backHandler}
         nextHandler={createCourseHandler}
+        isCreate
       />
     </div>
   );

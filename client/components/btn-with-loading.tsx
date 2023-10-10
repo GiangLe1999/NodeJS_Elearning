@@ -6,6 +6,7 @@ interface Props {
   content: string;
   customClasses?: string;
   type?: "submit" | "button";
+  onClick?: any;
 }
 
 const BtnWithLoading: FC<Props> = ({
@@ -13,9 +14,14 @@ const BtnWithLoading: FC<Props> = ({
   content,
   customClasses,
   type,
+  onClick,
 }): JSX.Element => {
   return (
-    <button className={`primary-btn w-full ${customClasses}`} type={type}>
+    <button
+      className={`primary-btn w-full ${customClasses}`}
+      type={type}
+      onClick={onClick && onClick}
+    >
       {isLoading ? (
         <>
           <ImSpinner className="animate-spin" size={18} /> Processing

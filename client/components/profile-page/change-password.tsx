@@ -7,7 +7,7 @@ import * as Yup from "yup";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useUpdatePasswordMutation } from "@/store/user/userApi";
+import { useUpdatePasswordMutation } from "@/store/user/user-api";
 
 interface Props {}
 

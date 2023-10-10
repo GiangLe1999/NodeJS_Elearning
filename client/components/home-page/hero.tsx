@@ -18,10 +18,10 @@ const Hero: FC<Props> = (props): JSX.Element => {
       </div>
 
       <div className="w-[90%] mx-auto flex flex-col justify-center">
-        <h1 className="capitalize dark:text-white text-[#000000c7] text-4xl leading-[60px] font-semibold font-josefin">
+        <h1 className="capitalize dark:text-white text-[#000000c7] text-4xl leading-[60px] font-semibold">
           Improve your online learning experience better instantly
         </h1>
-        <p className="font-josefin dark:text-[#edfff4] text-[#000000ac] text-medium mt-6">
+        <p className="dark:text-[#edfff4] text-[#000000ac] text-medium mt-6">
           We have 40K+ Online course & 500K+ Online registered student. Find
           your desired Courses from theme.
         </p>

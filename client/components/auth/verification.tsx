@@ -21,7 +21,6 @@ interface Props {
 
 const Verification: FC<Props> = ({ setRoute }): JSX.Element => {
   const { token } = useSelector((state: any) => state.auth);
-  console.log(token);
   const [activation, { isSuccess, error, isLoading }] = useActivationMutation();
   const [otp, setOtp] = useState("");
   const [invalidError, setInvalidError] = useState(false);

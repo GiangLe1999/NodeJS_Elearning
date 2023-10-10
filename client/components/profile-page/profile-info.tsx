@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import {
   useEditProfileMutation,
   useUpdateAvatarMutation,
-} from "@/store/user/userApi";
+} from "@/store/user/user-api";
 import { useLoadUserQuery } from "@/store/api-slice";
 import { ImSpinner } from "react-icons/im";
 
@@ -29,7 +29,6 @@ const ProfileInfo: FC<Props> = (props): JSX.Element => {
       const fileReader = new FileReader();
       fileReader.onload = async () => {
         if (fileReader.readyState === 2) {
-          console.log(fileReader);
           const avatar = fileReader.result;
           updateAvatar(avatar);
         }
@@ -58,7 +57,6 @@ const ProfileInfo: FC<Props> = (props): JSX.Element => {
 
     if (error || editError) {
       const errorData = (error as any) || (editError as any);
-      console.log(errorData);
       toast.error(errorData?.data.message);
     }
   }, [isSuccess, editSuccess, error, editError]);

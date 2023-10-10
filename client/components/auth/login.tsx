@@ -52,7 +52,6 @@ const Login: FC<Props> = ({ setRoute, setOpenModal }): JSX.Element => {
   const { errors } = formState;
 
   const onSubmit = async (data: FormValues) => {
-    console.log(data);
     await login(data);
   };
 

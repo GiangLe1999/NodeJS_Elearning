@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { CatchAsyncErrors } from "./catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import { redis } from "../utils/redis";
+import { updateAccessToken } from "../controllers/user.controller";
 require("dotenv").config();
 
 // Authenticated user
@@ -27,6 +28,14 @@ export const isAuthenticated = CatchAsyncErrors(
 
     if (!decoded) {
       return next(new ErrorHandler("Access token is not valid!", 400));
+    }
+
+    if (decoded.exp && decoded.exp <= Date.now() / 1000) {
+      try {
+        updateAccessToken(req, res, next);
+      } catch (error) {
+        return next(error);
+      }
     }
 
     // JSON object mà ta lưu trong Redis có key cũng chính là _id của user

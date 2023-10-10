@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import UserAvatar from "./user-avatar";
 import MobileSidebar from "./mobile-sidebar";
 import Logo from "./logo";
+import { useMount } from "@/hooks/useMount";
 
 interface Props {}
 
@@ -28,8 +29,6 @@ const Header: FC<Props> = (): JSX.Element | null => {
   const { data } = useSession();
 
   const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
-
-  const [hasMounted, setHasMounted] = useState(false);
 
   const openLoginModal = () => {
     setOpenModal(true);
@@ -68,13 +67,9 @@ const Header: FC<Props> = (): JSX.Element | null => {
     }
   }, [isSuccess]);
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
+  const hasMounted = useMount();
 
-  if (!hasMounted) {
-    return null;
-  }
+  if (!hasMounted) return null;
 
   return (
     <div className="w-full relative">

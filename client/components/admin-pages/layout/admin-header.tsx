@@ -9,7 +9,7 @@ interface Props {}
 const AdminHeader: FC<Props> = (props): JSX.Element => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="w-full flex items-center justify-end fixed p-6 top-5 right-0">
+    <div className="flex items-center justify-end fixed p-6 top-2 right-8">
       <ThemeSwitcher />
       <div
         className="relative cursor-pointer m-2"
@@ -22,7 +22,7 @@ const AdminHeader: FC<Props> = (props): JSX.Element => {
       </div>
 
       {open && (
-        <div className="w-[350px] h-[450px] dark:bg-[#111C43] bg-white shadow-xl border dark:border-slate-700 absolute top-16 !z-50 rounded">
+        <div className="w-[350px] h-[450px] dark:bg-[#111C43] bg-white shadow-xl border dark:border-slate-700 absolute top-16 !z-[9999] rounded">
           <h5 className="text-center text-[20px] text-black dark:text-white p-3">
             Notifications
           </h5>

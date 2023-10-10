@@ -10,20 +10,20 @@ import {
   useState,
 } from "react";
 
-import { CourseInfoValues, initialCourseInfo } from "./create-course-form";
+import { CourseInfoValues } from "./create-course-form";
 import FormInput from "@/components/form-input";
 import { MdUpload } from "react-icons/md";
 import ContainNextImage from "@/components/contain-next-image";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import BtnWithIcon from "@/components/btn-with-icon";
 import BottomNavigator from "./bottom-navigator";
 
 interface Props {
   active: number;
   setActive: Dispatch<SetStateAction<number>>;
   courseInfo: CourseInfoValues;
+  initialCourseInfo?: any;
   setCourseInfo: Dispatch<SetStateAction<CourseInfoValues>>;
 }
 
@@ -44,6 +44,7 @@ const CourseInfomation: FC<Props> = ({
   active,
   setActive,
   setCourseInfo,
+  initialCourseInfo,
   courseInfo,
 }): JSX.Element => {
   const [dragging, setDragging] = useState(false);
@@ -53,8 +54,7 @@ const CourseInfomation: FC<Props> = ({
     resolver: yupResolver(courseInfoSchema),
   });
 
-  const { register, handleSubmit, formState, setValue, watch, getValues } =
-    courseInfoForm;
+  const { register, handleSubmit, formState, setValue, watch } = courseInfoForm;
   const { errors } = formState;
 
   const thumbnail = watch("thumbnail");
@@ -116,6 +116,19 @@ const CourseInfomation: FC<Props> = ({
     setValue("demoUrl", courseInfo.demoUrl);
     setValue("thumbnail", courseInfo.thumbnail);
   }, [active]);
+
+  useEffect(() => {
+    if (initialCourseInfo) {
+      setValue("name", initialCourseInfo.name);
+      setValue("description", initialCourseInfo.description);
+      setValue("price", initialCourseInfo.price);
+      setValue("estimatedPrice", initialCourseInfo.estimatedPrice);
+      setValue("level", initialCourseInfo.level);
+      setValue("tags", initialCourseInfo.tags);
+      setValue("demoUrl", initialCourseInfo.demoUrl);
+      setValue("thumbnail", initialCourseInfo?.thumbnail?.url);
+    }
+  }, [initialCourseInfo]);
 
   return (
     <div className="w-[80%] mx-auto mt-24 mb-12">

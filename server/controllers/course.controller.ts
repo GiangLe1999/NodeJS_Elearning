@@ -14,7 +14,7 @@ import axios from "axios";
 export const uploadCourse = CatchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = req.body;
+      const { data } = req.body;
       const thumbnail = data.thumbnail;
       if (thumbnail) {
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
@@ -40,9 +40,17 @@ export const editCourse = CatchAsyncErrors(
     try {
       const data = req.body;
       const thumbnail = data.thumbnail;
+      const courseId = req.params.id;
 
-      if (thumbnail) {
-        await cloudinary.v2.uploader.destroy(thumbnail.public_id);
+      let existCourse: any = await CourseModel.findById(courseId);
+
+      if (!existCourse) {
+        res.status(404).json({ success: false, message: "Course not found" });
+      }
+
+      if (thumbnail && !thumbnail.startsWith("https")) {
+        await cloudinary.v2.uploader.destroy(existCourse.thumbnail.public_id);
+
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
           folder: "courses",
         });
@@ -53,8 +61,14 @@ export const editCourse = CatchAsyncErrors(
         };
       }
 
-      const courseId = req.params.id;
-      const course = await CourseModel.findByIdAndUpdate(
+      if (existCourse && thumbnail.startsWith("https")) {
+        data.thumbnail = {
+          public_id: existCourse?.thumbnail.public_id,
+          url: existCourse?.thumbnail.url,
+        };
+      }
+
+      const updatedCourse = await CourseModel.findByIdAndUpdate(
         courseId,
         {
           $set: data,
@@ -62,7 +76,7 @@ export const editCourse = CatchAsyncErrors(
         { new: true }
       );
 
-      res.status(201).json({ success: true, course });
+      res.status(201).json({ success: true, course: updatedCourse });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -102,20 +116,11 @@ export const getSingleCourse = CatchAsyncErrors(
 export const getAllCourses = CatchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const isCachedExist = await redis.get("allCourses");
-      if (isCachedExist) {
-        const courses = JSON.parse(isCachedExist);
-        res.status(200).json({ success: true, courses });
-      } else {
-        const courses = await CourseModel.find().select(
-          "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
-        );
+      const courses = await CourseModel.find().select(
+        "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
+      );
 
-        // Trong lần đầu truy cập, lưu lại data all course vào Redis
-        await redis.set("allCourses", JSON.stringify(courses), "EX", 604800);
-
-        res.status(200).json({ success: true, courses });
-      }
+      res.status(200).json({ success: true, courses });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -144,6 +149,20 @@ export const getCourseByUser = CatchAsyncErrors(
       const content = course?.courseData;
 
       res.status(200).json({ success: true, content });
+    } catch (error: any) {
+      return new ErrorHandler(error.message, 500);
+    }
+  }
+);
+
+// Get course for admin page
+export const getCourseByAdmin = CatchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const courseId = req.params.id;
+      const course = await CourseModel.findById(courseId);
+
+      res.status(200).json(course);
     } catch (error: any) {
       return new ErrorHandler(error.message, 500);
     }

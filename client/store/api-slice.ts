@@ -12,19 +12,6 @@ export const apiSlice = createApi({
         method: "GET",
         credentials: "include" as const,
       }),
-      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-        try {
-          const result = await queryFulfilled;
-          dispatch(
-            userLogin({
-              token: result.data.acessToken,
-              user: result.data.user,
-            })
-          );
-        } catch (error: any) {
-          console.log(error);
-        }
-      },
     }),
 
     // Load user
