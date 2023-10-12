@@ -66,7 +66,7 @@ const ProfileInfo: FC<Props> = (props): JSX.Element => {
       <div className="w-2/3 max-[600px]:w-[90%] mx-auto">
         <div className="w-32 h-32 relative rounded-full border-[3px] mx-auto mb-4">
           {isLoading ? (
-            <div className="h-full rounded-full bg-slate-500 text-white grid place-items-center">
+            <div className="h-full rounded-full bg-slate-500 text-dark_text grid place-items-center">
               <ImSpinner className="animate-spin" size={30} />
             </div>
           ) : (
@@ -82,7 +82,7 @@ const ProfileInfo: FC<Props> = (props): JSX.Element => {
           />
           <label
             htmlFor="avatar"
-            className="absolute w-8 h-8 bg-slate-500 dark:bg-tertiary text-white rounded-full bottom-2 right-0 grid place-items-center border cursor-pointer hover:scale-105 transition"
+            className="absolute w-8 h-8 bg-slate-500 dark:bg-tertiary text-dark_text rounded-full bottom-2 right-0 grid place-items-center border cursor-pointer hover:scale-105 transition"
           >
             <AiOutlineCamera className="z-1" size={20} />
           </label>

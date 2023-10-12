@@ -15,6 +15,7 @@ interface Props {}
 export type CourseInfoValues = {
   name: string;
   description: string;
+  category: string;
   price: string;
   estimatedPrice: string;
   tags: string;
@@ -26,6 +27,7 @@ export type CourseInfoValues = {
 export const initialCourseInfo = {
   name: "",
   description: "",
+  category: "",
   price: "",
   estimatedPrice: "",
   tags: "",

@@ -1,8 +1,8 @@
 import { FC } from "react";
 
 interface Props {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 const Heading: FC<Props> = ({ title, description }): JSX.Element => {

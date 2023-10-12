@@ -57,12 +57,12 @@ const CoursePreview: FC<Props> = ({
     <div className="w-[85%] mx-auto py-5 my-12">
       <div className="w-full flex gap-8">
         <div className="w-[60%]">
-          <h1 className="text-tertiary dark:text-white text-2xl font-bold">
+          <h1 className="text-tertiary dark:text-dark_text text-2xl font-bold">
             {courseData?.name}
           </h1>
 
           <div className="flex items-center mt-6 gap-4 flex-wrap">
-            <div className="dark:bg-secondary/70 bg-tertiary/70 text-white w-fit px-2 py-1 rounded-[5px]">
+            <div className="dark:bg-secondary/70 bg-tertiary/70 text-dark_text w-fit px-2 py-1 rounded-[5px]">
               {courseData?.tags}
             </div>
 
@@ -81,16 +81,16 @@ const CoursePreview: FC<Props> = ({
             <div className="w-9 h-9 rounded-full overflow-hidden relative mt-6">
               <LoggedinUserAvatar />
             </div>
-            <span className="mt-6 text-slate-500 dark:text-white">
+            <span className="mt-6 text-slate-500 dark:text-dark_text">
               Created By{" "}
-              <b className="text-slate-800 dark:text-secondary">{user.name}</b>
+              <b className="text-tertiary dark:text-secondary">{user.name}</b>
             </span>
           </div>
 
           <h2 className="mt-8 font-bold text-xl mb-3">
             What you&apos;ll learn In This Course
           </h2>
-          <ul className="list-disc text-slate-500 dark:text-white space-y-2">
+          <ul className="list-disc text-slate-500 dark:text-dark_text space-y-2">
             {courseData.benefits?.map(
               (benefit: { title: string }, index: number) => (
                 <li key={index} className="ml-4">
@@ -191,7 +191,7 @@ const CoursePreview: FC<Props> = ({
                 Category
               </span>
               <span className="font-bold text-slate-500">
-                {courseData.tags}
+                {courseData.category}
               </span>
             </div>
 
@@ -253,7 +253,7 @@ const CoursePreview: FC<Props> = ({
             </div>
             <BtnWithIcon content="Buy Now" customClasses="w-full mt-4" />
 
-            <p className="text-slate-500 dark:text-white text-sm mt-6 mb-4 text-center">
+            <p className="text-slate-500 dark:text-dark_text text-sm mt-6 mb-4 text-center">
               30-Day Money-Back Guarantee
             </p>
           </div>

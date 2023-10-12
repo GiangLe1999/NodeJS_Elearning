@@ -42,7 +42,7 @@ const MobileSidebar: FC<Props> = ({
           ) : (
             <HiOutlineUserCircle
               size={20}
-              className="dark:text-white text-slate-700 cursor-pointer mx-auto mt-4"
+              className="dark:text-dark_text text-slate-700 cursor-pointer mx-auto mt-4"
               onClick={openLoginModal}
             />
           )}

@@ -7,7 +7,7 @@ interface Props {
 }
 
 const panelItemClasses =
-  "grid place-items-center py-3 cursor-pointer font-semibold text-slate-500 dark:text-white";
+  "grid place-items-center py-3 cursor-pointer font-semibold text-slate-500 dark:text-dark_text";
 
 const activePanelItemClasses =
   "border-b-[2px] border-slate-900 dark:border-secondary text-slate-900 dark:!text-secondary";
@@ -48,7 +48,7 @@ const CourseContentTabs: FC<Props> = ({
         </div>
       </div>
 
-      <div className="py-6 text-slate-500 dark:text-white">
+      <div className="py-6 text-slate-500 dark:text-dark_text">
         {active === 0 && <div>{description}</div>}
 
         {active === 1 && (

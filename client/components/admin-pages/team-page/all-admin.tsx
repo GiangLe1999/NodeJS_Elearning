@@ -55,7 +55,7 @@ const columns: GridColDef[] = [
           <a href={`mailto:${params.row.email}`} className="text-center">
             <AiOutlineMail
               size={20}
-              className="dark:text-white text-slate-700"
+              className="dark:text-dark_text text-slate-700"
             />
           </a>
         </>
@@ -72,7 +72,7 @@ const columns: GridColDef[] = [
           <Button>
             <AiOutlineDelete
               size={20}
-              className="dark:text-white text-slate-700 mr-4"
+              className="dark:text-dark_text text-slate-700 mr-4"
             />
           </Button>
         </>

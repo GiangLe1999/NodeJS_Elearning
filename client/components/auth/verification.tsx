@@ -56,7 +56,7 @@ const Verification: FC<Props> = ({ setRoute }): JSX.Element => {
     <form onSubmit={verifyHandler}>
       <h3 className="form-title">Verify Your Account</h3>
 
-      <div className="mx-auto mt-2 w-20 h-20 rounded-full text-white bg-tertiary dark:bg-secondary flex items-center justify-center">
+      <div className="mx-auto mt-2 w-20 h-20 rounded-full text-dark_text bg-tertiary dark:bg-secondary flex items-center justify-center">
         <VscWorkspaceTrusted size={45} />
       </div>
 
@@ -77,7 +77,7 @@ const Verification: FC<Props> = ({ setRoute }): JSX.Element => {
         type="submit"
       />
 
-      <p className="text-center pt-4 text-slate-700 dark:text-white">
+      <p className="text-center pt-4 text-slate-700 dark:text-dark_text">
         Go back to sign in?
         <span className="form-link" onClick={() => setRoute("login")}>
           Sign in

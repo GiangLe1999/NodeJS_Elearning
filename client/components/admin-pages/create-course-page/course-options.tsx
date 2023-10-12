@@ -21,7 +21,7 @@ const CourseOptions: FC<Props> = ({ active, setActive }): JSX.Element => {
           <div
             className={`w-[35px] h-[35px] rounded-full grid place-items-center ${
               active + 1 > index ? "bg-[#3e4396]" : "bg-[#384766]"
-            } relative text-white`}
+            } relative text-dark_text`}
           >
             <IoMdCheckmark size={25} />
             {index !== options.length - 1 && (
@@ -32,7 +32,7 @@ const CourseOptions: FC<Props> = ({ active, setActive }): JSX.Element => {
               />
             )}
           </div>
-          <h5 className={`pl-3 dark:text-white text-black text-lg`}>
+          <h5 className={`pl-3 dark:text-dark_text text-black text-lg`}>
             {option}
           </h5>
         </div>

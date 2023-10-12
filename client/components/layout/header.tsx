@@ -93,7 +93,7 @@ const Header: FC<Props> = (): JSX.Element | null => {
             >
               <HiOutlineMenuAlt3
                 size={21}
-                className="dark:text-white text-slate-700 cursor-pointer -mt-1"
+                className="dark:text-dark_text text-slate-700 cursor-pointer -mt-1"
               />
             </div>
 

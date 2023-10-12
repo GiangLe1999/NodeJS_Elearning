@@ -1,9 +1,14 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import DashboardWidgets from "./dashboard-widgets";
 
-interface Props {}
+interface Props {
+  isDashboard?: boolean;
+}
 
-const DashboardHero: FC<Props> = (props): JSX.Element => {
-  return <div></div>;
+const DashboardHero: FC<Props> = ({ isDashboard }): JSX.Element => {
+  const [open, setOpen] = useState(false);
+
+  return <div>{isDashboard && <DashboardWidgets />}</div>;
 };
 
 export default DashboardHero;

@@ -84,7 +84,7 @@ const EditHero: FC<Props> = (props): JSX.Element => {
             className="absolute w-16 h-16 right-5 bottom-5 bg-slate-500 rounded-full grid place-items-center cursor-pointer hover:scale-105 transition"
             htmlFor="banner"
           >
-            <AiOutlineCamera className="text-white" size={30} />
+            <AiOutlineCamera className="text-dark_text" size={30} />
           </label>
           <input
             type="file"
@@ -101,7 +101,7 @@ const EditHero: FC<Props> = (props): JSX.Element => {
           <textarea
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="resize-none min-h-fit capitalize dark:text-white text-[#000000c7] text-4xl leading-[60px] font-semibold bg-transparent outline-none"
+            className="resize-none min-h-fit capitalize dark:text-dark_text text-[#000000c7] text-4xl leading-[60px] font-semibold bg-transparent outline-none"
           >
             {title}
           </textarea>

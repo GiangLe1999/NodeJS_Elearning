@@ -10,7 +10,7 @@ const ThemeSwitcher: FC<Props> = (props): JSX.Element | null => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center justify-center mx-4 cursor-pointer -mt-1 text-slate-700 dark:text-white">
+    <div className="flex items-center justify-center mx-4 cursor-pointer -mt-1 text-slate-700 dark:text-dark_text">
       {theme === "light" ? (
         <BiMoon size={21} onClick={() => setTheme("dark")} />
       ) : (

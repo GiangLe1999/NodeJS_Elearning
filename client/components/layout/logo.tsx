@@ -8,9 +8,9 @@ const Logo: FC<Props> = (props): JSX.Element => {
   return (
     <Link
       href="/"
-      className={`flex items-center gap-2 text-[25px] font-bold text-tertiary dark:text-secondary py-4`}
+      className={`flex items-center gap-2 text-[25px] font-bold text-tertiary text-gradient py-4`}
     >
-      <GiBookCover size={28} className="-mt-1" /> Elearning
+      <GiBookCover size={28} className="-mt-1 text-[#3d8fc0]" /> Elearning
     </Link>
   );
 };

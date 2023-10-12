@@ -1,12 +1,13 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, model, Types } from "mongoose";
 
 interface FaqItem extends Document {
   question: string;
   answer: string;
 }
 
-interface Category extends Document {
+export interface Category extends Document {
   title: string;
+  courses: Schema.Types.ObjectId[];
 }
 
 interface BannerImage extends Document {
@@ -36,6 +37,7 @@ const faqSchema = new Schema<FaqItem>({
 
 const categorySchema = new Schema<Category>({
   title: { type: String },
+  courses: { type: [Schema.Types.ObjectId] },
 });
 
 const bannerImageSchema = new Schema<BannerImage>({

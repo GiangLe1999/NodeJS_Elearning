@@ -36,11 +36,11 @@ const Comment: FC<Props> = ({ avatar, name, rating, content }): JSX.Element => {
           </p>
         </div>
       </div>
-      <div className="text-sm text-slate-500 dark:text-white mt-4">
+      <div className="text-sm text-slate-500 dark:text-dark_text mt-4">
         {content}
       </div>
 
-      <div className="flex items-center gap-4 mt-4 text-slate-800 dark:text-secondary">
+      <div className="flex items-center gap-4 mt-4 text-tertiary dark:text-secondary">
         <p className="text-xs mt-1 underline">Find this helpful?</p>
         <BiSolidLike className="cursor-pointer" />
         <BiSolidDislike

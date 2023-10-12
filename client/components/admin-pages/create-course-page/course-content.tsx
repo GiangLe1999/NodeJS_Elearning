@@ -152,7 +152,7 @@ const CourseContent: FC<Props> = ({
                     <div className="relative">
                       <input
                         type="text"
-                        className={`w-full cursor-pointer outline-slate-900 bg-slate-600 text-white text-2xl py-3 pl-6`}
+                        className={`w-full cursor-pointer outline-slate-900 bg-slate-600 text-dark_text text-2xl py-3 pl-6`}
                         onChange={(e) => {
                           const updatedData = [...courseContentData];
                           updatedData[index].videoSection = e.target.value;
@@ -167,7 +167,7 @@ const CourseContent: FC<Props> = ({
                     {isCollapsed[index] ? (
                       <>
                         {item.title ? (
-                          <p className="dark:text-white text-tertiary">
+                          <p className="dark:text-dark_text text-tertiary">
                             {index + 1}. {item.title}
                           </p>
                         ) : (
@@ -175,14 +175,14 @@ const CourseContent: FC<Props> = ({
                         )}
                       </>
                     ) : (
-                      <p className="text-lg font-semibold text-tertiary dark:text-white">
+                      <p className="text-lg font-semibold text-tertiary dark:text-dark_text">
                         Video Details
                       </p>
                     )}
 
                     <div className="flex items-center">
                       <div
-                        className={`dark:text-white mr-4 flex items-center gap-1 text-tertiary ${
+                        className={`dark:text-dark_text mr-4 flex items-center gap-1 text-tertiary ${
                           index > 0 ? "cursor-pointer" : "cursor-no-drop"
                         }`}
                         onClick={() => {
@@ -198,7 +198,7 @@ const CourseContent: FC<Props> = ({
                       </div>
 
                       <div
-                        className="dark:text-white text-tertiary flex items-center gap-1 cursor-pointer"
+                        className="dark:text-dark_text text-tertiary flex items-center gap-1 cursor-pointer"
                         onClick={() => handleCollapseToggle(index)}
                       >
                         <span className="underline text-sm">Collapse</span>
@@ -282,7 +282,7 @@ const CourseContent: FC<Props> = ({
                                   linkIndex === 0
                                     ? "cursor-no-drop"
                                     : "cursor-pointer"
-                                } text-tertiary dark:text-white flex items-center gap-1`}
+                                } text-tertiary dark:text-dark_text flex items-center gap-1`}
                                 onClick={() => {
                                   linkIndex === 0
                                     ? null
@@ -329,7 +329,7 @@ const CourseContent: FC<Props> = ({
 
                         <div className="inline-block mb-6">
                           <p
-                            className="flex items-center gap-1 dark:text-white text-sm text-tertiary cursor-pointer"
+                            className="flex items-center gap-1 dark:text-dark_text text-sm text-tertiary cursor-pointer"
                             onClick={() => handleAddLink(index)}
                           >
                             <span className="underline">Add More Link</span>
@@ -342,7 +342,7 @@ const CourseContent: FC<Props> = ({
 
                   {index === courseContentData.length - 1 && (
                     <BtnWithIcon
-                      customClasses="mx-auto text-white !bg-slate-700 w-fit !rounded-sm !mt-6"
+                      customClasses="mx-auto text-dark_text !bg-slate-700 w-fit !rounded-sm !mt-6"
                       onClick={() => newContentHandler(item)}
                       icon={AiOutlinePlusCircle}
                       iconSize={20}
@@ -355,7 +355,7 @@ const CourseContent: FC<Props> = ({
           })}
 
           <BtnWithIcon
-            customClasses="mx-auto text-white !bg-slate-700 w-fit !rounded-sm"
+            customClasses="mx-auto text-dark_text !bg-slate-700 w-fit !rounded-sm"
             onClick={addNewSection}
             icon={AiOutlinePlusCircle}
             iconSize={20}

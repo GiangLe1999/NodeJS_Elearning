@@ -26,7 +26,7 @@ const UserAvatar: FC<Props> = ({ openLoginModal }): JSX.Element => {
       ) : (
         <HiOutlineUserCircle
           size={22}
-          className="dark:text-white text-slate-700 -mt-1 cursor-pointer max-[800px]:hidden block ml-[14px]"
+          className="dark:text-dark_text text-slate-700 -mt-1 cursor-pointer max-[800px]:hidden block ml-[14px]"
           onClick={openLoginModal}
         />
       )}

@@ -66,7 +66,7 @@ const ChangePassword: FC<Props> = (props): JSX.Element => {
   return (
     <div className="block-wrapper py-8">
       <div className="w-2/3 max-[600px]:w-[90%] mx-auto">
-        <h2 className="font-bold dark:text-white text-tertiary text-2xl text-center">
+        <h2 className="font-bold dark:text-dark_text text-tertiary text-2xl text-center">
           Change Password
         </h2>
         <form className="py-4" onSubmit={handleSubmit(onSubmit)}>

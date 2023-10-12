@@ -14,7 +14,8 @@ const config: Config = {
       },
       colors: {
         secondary: "#0da5b5",
-        tertiary: "#1e293b",
+        tertiary: "#1a1a1ac7",
+        dark_text: "#edfff4",
       },
     },
   },

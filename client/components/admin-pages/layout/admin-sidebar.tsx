@@ -126,7 +126,7 @@ const AdminSidebar: FC<Props> = ({
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <h3 className="text-[28px] uppercase dark:text-white text-tertiary !font-josefin">
+                <h3 className="text-[28px] uppercase dark:text-dark_text text-tertiary !font-josefin">
                   E-Learning
                 </h3>
 

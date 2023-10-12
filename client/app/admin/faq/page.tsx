@@ -4,12 +4,14 @@ import FAQAccordion from "@/components/admin-pages/faq-page/faq-accordion";
 import AdminProtectedPage from "@/components/admin-protected-page";
 import { useMount } from "@/hooks/useMount";
 import axios from "axios";
+import { Types } from "mongoose";
 import { NextPage } from "next";
 import { useFieldArray, useForm } from "react-hook-form";
 
 interface Props {}
 
 export interface IFaq {
+  _id: Types.ObjectId;
   answer: string;
   question: string;
 }

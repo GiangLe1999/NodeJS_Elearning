@@ -12,7 +12,7 @@ export const getUserAnalytics = CatchAsyncErrors(
     try {
       const users = await generateLast12MonthsData<IUser>(userModel);
 
-      res.status(200).json({ success: true, users });
+      res.status(200).json({ success: true, users: users.last12Months });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -25,7 +25,7 @@ export const getCourseAnalytics = CatchAsyncErrors(
     try {
       const courses = await generateLast12MonthsData<ICourse>(CourseModel);
 
-      res.status(200).json({ success: true, courses });
+      res.status(200).json({ success: true, courses: courses.last12Months });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -38,7 +38,7 @@ export const getOrderAnalytics = CatchAsyncErrors(
     try {
       const orders = await generateLast12MonthsData<IOrder>(OrderModel);
 
-      res.status(200).json({ success: true, orders });
+      res.status(200).json({ success: true, orders: orders.last12Months });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

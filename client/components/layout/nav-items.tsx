@@ -19,9 +19,9 @@ const NavItems: FC<Props> = ({ isMobile }): JSX.Element => {
             className={`${
               pathName === item.url ||
               (item.url.includes(route) && route.length > 1)
-                ? "dark:text-secondary text-tertiary font-bold underline"
-                : "dark:text-white text-slate-700"
-            } text-lg px-6 leading-none`}
+                ? "text-gradient font-bold border-b border-[#3d8fc0]"
+                : "dark:text-dark_text text-slate-700"
+            } text-lg mx-6 leading-none`}
           >
             {item.name}
           </span>

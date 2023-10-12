@@ -10,7 +10,7 @@ import { updateAccessToken } from "../controllers/user.controller";
 const analyticsRouter = express.Router();
 
 analyticsRouter.get(
-  "/get-user-analytics",
+  "/get-users-analytics",
   updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
@@ -18,7 +18,7 @@ analyticsRouter.get(
 );
 
 analyticsRouter.get(
-  "/get-course-analytics",
+  "/get-courses-analytics",
   updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
@@ -26,7 +26,7 @@ analyticsRouter.get(
 );
 
 analyticsRouter.get(
-  "/get-order-analytics",
+  "/get-orders-analytics",
   updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),

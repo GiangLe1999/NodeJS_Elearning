@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import { sendMail } from "../utils/sendMail";
 import NotificationModel from "../models/notification.model";
 import axios from "axios";
+import LayoutModel from "../models/layout.model";
 
 // Upload course
 export const uploadCourse = CatchAsyncErrors(
@@ -48,6 +49,20 @@ export const editCourse = CatchAsyncErrors(
         res.status(404).json({ success: false, message: "Course not found" });
       }
 
+      const categories = await LayoutModel.findOne({ type: "Categories" });
+
+      const oldCategory = categories?.categories.find(
+        (category) => category.title === existCourse.category
+      );
+
+      if (oldCategory) {
+        const courseIndex = oldCategory?.courses?.findIndex(
+          (course: any) => course.toString() === existCourse._id.toString()
+        );
+
+        oldCategory.courses?.splice(courseIndex, 1);
+      }
+
       if (thumbnail && !thumbnail.startsWith("https")) {
         await cloudinary.v2.uploader.destroy(existCourse.thumbnail.public_id);
 
@@ -75,6 +90,14 @@ export const editCourse = CatchAsyncErrors(
         },
         { new: true }
       );
+
+      const newCategory = categories?.categories.find(
+        (category) => category.title === data.category
+      );
+
+      newCategory?.courses.push(updatedCourse?._id);
+
+      await categories?.save();
 
       res.status(201).json({ success: true, course: updatedCourse });
     } catch (error: any) {
@@ -422,6 +445,22 @@ export const deleteCourse = CatchAsyncErrors(
       await CourseModel.deleteOne({ _id: id });
 
       await redis.del(id);
+
+      const categories = await LayoutModel.findOne({ type: "Categories" });
+
+      const oldCategory = categories?.categories.find(
+        (category) => category.title === course.category
+      );
+
+      if (oldCategory) {
+        const courseIndex = oldCategory?.courses?.findIndex(
+          (course: any) => course.toString() === course._id.toString()
+        );
+
+        oldCategory.courses?.splice(courseIndex, 1);
+      }
+
+      await categories?.save();
 
       res
         .status(200)

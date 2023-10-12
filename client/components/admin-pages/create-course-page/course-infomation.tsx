@@ -18,6 +18,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import BottomNavigator from "./bottom-navigator";
+import FormSelect from "@/components/form-select";
+import axios from "axios";
 
 interface Props {
   active: number;
@@ -30,6 +32,7 @@ interface Props {
 const courseInfoSchema = Yup.object({
   name: Yup.string().required("Please enter course's name"),
   description: Yup.string().required("Please enter course's description"),
+  category: Yup.string().required("Please choose course's category"),
   price: Yup.string().required("Please enter course's price"),
   estimatedPrice: Yup.string().required(
     "Please enter course's estimated price"
@@ -48,11 +51,27 @@ const CourseInfomation: FC<Props> = ({
   courseInfo,
 }): JSX.Element => {
   const [dragging, setDragging] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const courseInfoForm = useForm<CourseInfoValues>({
     defaultValues: initialCourseInfo,
     resolver: yupResolver(courseInfoSchema),
   });
+
+  const getAllCategories = async () => {
+    const { data } = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/get-layout/Categories`
+    );
+    const fetchCategories = data?.layout.categories.map(
+      (item: { title: string }) => item.title
+    );
+
+    setCategories(fetchCategories);
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
 
   const { register, handleSubmit, formState, setValue, watch } = courseInfoForm;
   const { errors } = formState;
@@ -109,6 +128,7 @@ const CourseInfomation: FC<Props> = ({
   useEffect(() => {
     setValue("name", courseInfo.name);
     setValue("description", courseInfo.description);
+    setValue("category", courseInfo.category);
     setValue("price", courseInfo.price);
     setValue("estimatedPrice", courseInfo.estimatedPrice);
     setValue("level", courseInfo.level);
@@ -121,6 +141,7 @@ const CourseInfomation: FC<Props> = ({
     if (initialCourseInfo) {
       setValue("name", initialCourseInfo.name);
       setValue("description", initialCourseInfo.description);
+      setValue("category", initialCourseInfo.category);
       setValue("price", initialCourseInfo.price);
       setValue("estimatedPrice", initialCourseInfo.estimatedPrice);
       setValue("level", initialCourseInfo.level);
@@ -171,13 +192,22 @@ const CourseInfomation: FC<Props> = ({
           />
         </div>
 
-        <FormInput
-          id="tags"
-          label="Course Tags"
-          register={register("tags")}
-          errorMsg={errors.tags?.message}
-          placeholder="MERN,Next 13,Socket.io,..."
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <FormInput
+            id="tags"
+            label="Course Tags"
+            register={register("tags")}
+            errorMsg={errors.tags?.message}
+            placeholder="MERN,Next 13,Socket.io,..."
+          />
+          <FormSelect
+            id="category"
+            label="Category"
+            options={categories}
+            errorMsg={errors.category?.message}
+            register={register("category")}
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <FormInput

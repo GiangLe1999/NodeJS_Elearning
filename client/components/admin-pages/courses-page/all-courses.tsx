@@ -58,7 +58,7 @@ const AllCourses: FC<Props> = (props): JSX.Element => {
             <Link href={`/admin/edit-course/${params.row.id}`}>
               <FiEdit
                 size={17}
-                className="dark:text-white text-slate-700 mr-6"
+                className="dark:text-dark_text text-slate-700 mr-6"
               />
             </Link>
           </>
@@ -80,7 +80,7 @@ const AllCourses: FC<Props> = (props): JSX.Element => {
             >
               <AiOutlineDelete
                 size={20}
-                className="dark:text-white text-slate-700 mr-4"
+                className="dark:text-dark_text text-slate-700 mr-4"
               />
             </Button>
           </>
