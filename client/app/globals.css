@@ -358,3 +358,16 @@
 .reviews-swiper .swiper-pagination-bullet {
   @apply main-gradient cursor-pointer;
 }
+
+/* Footer */
+.footer-title {
+  @apply font-bold uppercase text-tertiary dark:text-dark_text mb-3;
+}
+
+.footer-item {
+  @apply text-tertiary dark:text-dark_text text-[13px] my-[10px] hover:font-bold leading-5;
+}
+
+.footer-icon {
+  @apply relative w-7 h-7 rounded-full overflow-hidden;
+}

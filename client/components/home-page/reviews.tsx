@@ -9,7 +9,7 @@ interface Props {}
 const Reviews: FC<Props> = (props): JSX.Element => {
   return (
     <section className="even-section">
-      <div className="container grid grid-cols-2 gap-10 max-[1000px]:grid-cols-1">
+      <div className="container grid grid-cols-2 gap-10 max-[1000px]:grid-cols-1 pt-6">
         <div className="w-[80%] max-w-[500px] aspect-square relative mx-auto">
           <NextImage
             src={"/assets/images/home-page/review-banner.png"}
