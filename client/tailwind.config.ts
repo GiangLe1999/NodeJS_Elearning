@@ -10,12 +10,15 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        josefin: ["var(--font-Josefin)"],
+        josefin: ["var(--font-josefin)"],
       },
       colors: {
         secondary: "#0da5b5",
         tertiary: "#1a1a1ac7",
         dark_text: "#edfff4",
+      },
+      transitionProperty: {
+        width: "width",
       },
     },
   },

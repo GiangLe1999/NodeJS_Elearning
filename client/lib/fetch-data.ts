@@ -48,3 +48,39 @@ export const getAllFAQs = async () => {
     console.log(error);
   }
 };
+
+export const getCoursePublicDetails = async (courseId: string) => {
+  try {
+    const { data } = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/get-course/${courseId}`
+    );
+
+    return data.course;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getStripePublishableKey = async () => {
+  try {
+    const { data } = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/payment/stripe-publishable-key`
+    );
+
+    return data.publishableKey;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCourseReviews = async (courseId: string) => {
+  try {
+    const { data } = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/get-reviews/${courseId}`
+    );
+
+    return { reviews: data.course.reviews, ratings: data.course.ratings };
+  } catch (error) {
+    console.log(error);
+  }
+};

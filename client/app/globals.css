@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 /* Common class */
+html {
+  scroll-behavior: smooth;
+}
+
 .container {
   @apply max-[640px]:max-w-[600px] max-[960px]:max-w-[900px] max-[1280px]:max-w-[1200px] px-4 mx-auto;
 }
@@ -45,6 +49,15 @@
   @apply bg-white dark:bg-slate-900 text-slate-700 dark:text-dark_text bg-opacity-90 dark:border-[#ffffff1d] border rounded-[5px] shadow-sm dark:shadow-sm;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @keyframes changeBackgroundColor {
   0%,
   100% {
@@ -73,7 +86,23 @@
 
 /* Button */
 .primary-btn {
-  @apply py-[10px] px-4 flex items-center justify-center gap-x-1 rounded-[5px] dark:bg-secondary bg-tertiary text-dark_text font-bold;
+  background-image: linear-gradient(90deg, #4d88c4 2.34%, #0da5b5 100.78%);
+  transition: background-image 0.5s ease-in;
+  @apply relative py-3 px-4 rounded-sm
+    text-dark_text font-bold;
+}
+
+.primary-btn:hover::before {
+  opacity: 1;
+}
+
+.primary-btn span {
+  @apply relative z-[3];
+}
+
+.primary-btn::before {
+  background-image: linear-gradient(315deg, #098b99, #057fa8);
+  @apply absolute content-[''] w-full h-full transition-opacity duration-500 ease-[ease-out] z-[2] opacity-0 left-0 top-0 rounded-[5px];
 }
 
 /* Form */
@@ -332,10 +361,10 @@
   @apply bg-slate-700 transition;
 }
 
-/* Accordior */
+/* Accordion */
 
 .css-9xkge5-MuiButtonBase-root-MuiAccordionSummary-root {
-  @apply !bg-[#fcfcfc] dark:!bg-slate-800 dark:!text-dark_text;
+  @apply !bg-[#fbfafa] dark:!bg-slate-800 dark:!text-dark_text;
 }
 
 .css-v84d5j-MuiSvgIcon-root {
@@ -370,4 +399,28 @@
 
 .footer-icon {
   @apply relative w-7 h-7 rounded-full overflow-hidden;
+}
+
+/* Lecture list accordion */
+.lecture-list-accordion
+  .css-1pvvkxv-MuiButtonBase-root-MuiAccordionSummary-root {
+  @apply bg-[#f7f9fa] dark:!bg-slate-800 dark:!text-dark_text;
+}
+
+.lecture-list-accordion .css-15v22id-MuiAccordionDetails-root {
+  @apply dark:!text-dark_text !border-b !p-0;
+}
+
+.lecture-list-accordion .css-1fjvggn-MuiPaper-root-MuiAccordion-root {
+  @apply !border-l-transparent dark:!border-l-slate-800;
+}
+
+/* Rating */
+.css-1c99szj-MuiRating-icon {
+  @apply dark:!text-[#ffffff4d];
+}
+
+.css-1lauo1g-MuiRating-root,
+.css-ryrseu-MuiRating-root {
+  @apply !text-[#b4690e] dark:!text-[#faaf00];
 }

@@ -112,23 +112,17 @@ export const getSingleCourse = CatchAsyncErrors(
     try {
       const courseId = req.params.id;
 
-      const isCachedExist = await redis.get(courseId);
-
-      if (isCachedExist) {
-        // Kể từ lần 2 truy cập trang, data gửi về trong response là data của Redis
-        // Ta bỏ qua được bước fetch course data từ database
-        const course = JSON.parse(isCachedExist);
-        res.status(200).json({ success: true, course });
-      } else {
-        const course = await CourseModel.findById(courseId).select(
+      const course = await CourseModel.findById(courseId)
+        .select(
           "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
-        );
+        )
+        .populate("reviews.user");
 
-        // Trong lần đầu truy cập trang, fetch data từ database sau đó lưu tạm trong redis
-        await redis.set(courseId, JSON.stringify(course));
-
-        res.status(200).json({ success: true, course });
+      if (!course) {
+        res.status(404).json({ success: false, message: "Course not found" });
       }
+
+      res.status(200).json({ success: true, course });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -156,9 +150,8 @@ export const getCourseByUser = CatchAsyncErrors(
     try {
       const userCourseList = req.user?.courses;
       const courseId = req.params.id;
-
       const courseExists = userCourseList?.find(
-        (course: any) => course._id.toString() === courseId
+        (course: any) => course.courseId === courseId
       );
 
       if (!courseExists) {
@@ -167,7 +160,9 @@ export const getCourseByUser = CatchAsyncErrors(
         );
       }
 
-      const course = await CourseModel.findById(courseId);
+      const course = await CourseModel.findById(courseId).populate(
+        "courseData.questions.user"
+      );
 
       const content = course?.courseData;
 
@@ -194,6 +189,7 @@ export const getCourseByAdmin = CatchAsyncErrors(
 
 // Add questions in course
 interface IAddQuestionData {
+  title: string;
   question: string;
   courseId: string;
   contentId: string;
@@ -202,7 +198,8 @@ interface IAddQuestionData {
 export const addQuestion = CatchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { question, courseId, contentId } = req.body as IAddQuestionData;
+      const { title, question, courseId, contentId } =
+        req.body as IAddQuestionData;
       const course = await CourseModel.findById(courseId);
 
       if (!mongoose.Types.ObjectId.isValid(contentId)) {
@@ -219,7 +216,8 @@ export const addQuestion = CatchAsyncErrors(
 
       // Create new question object
       const newQuestion: any = {
-        user: req.user,
+        user: req.user?._id,
+        title,
         question,
         questionReplies: [],
       };
@@ -328,7 +326,7 @@ export const addReview = CatchAsyncErrors(
 
       // Check if courseId already exists in userCourseList
       const courseExists = userCourseList?.find(
-        (course: any) => course._id.toString() === courseId.toString()
+        (course: any) => course.courseId === courseId.toString()
       );
 
       if (!courseExists) {
@@ -343,7 +341,7 @@ export const addReview = CatchAsyncErrors(
         const { review, rating } = req.body;
 
         const reviewData: any = {
-          user: req.user,
+          user: req.user?._id,
           comment: review,
           rating,
         };
@@ -490,6 +488,27 @@ export const generateVideoUrl = CatchAsyncErrors(
       );
 
       res.json(response.data);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// Generate Course Reviews
+export const getCourseReviews = CatchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { courseId } = req.params;
+
+      const course = await CourseModel.findById(courseId)
+        .select("reviews ratings")
+        .populate("reviews.user");
+
+      if (!course) {
+        return next(new ErrorHandler("Course not found", 400));
+      }
+
+      res.status(200).json({ success: true, course });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

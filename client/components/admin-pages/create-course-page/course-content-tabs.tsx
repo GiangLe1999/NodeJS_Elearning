@@ -10,7 +10,7 @@ const panelItemClasses =
   "grid place-items-center py-3 cursor-pointer font-semibold text-slate-500 dark:text-dark_text";
 
 const activePanelItemClasses =
-  "border-b-[2px] border-slate-900 dark:border-secondary text-slate-900 dark:!text-secondary";
+  "border-b-[2px] border-secondary text-gradient !font-bold";
 
 const CourseContentTabs: FC<Props> = ({
   prerequisites,
@@ -21,7 +21,7 @@ const CourseContentTabs: FC<Props> = ({
 
   return (
     <>
-      <div className="bg-[#f2f0ef] dark:bg-slate-800 grid grid-cols-3">
+      <div className="bg-[#fbfafa] dark:bg-slate-800 grid grid-cols-3 custom-shadow">
         <div
           className={`${panelItemClasses} ${
             active === 0 && activePanelItemClasses

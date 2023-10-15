@@ -11,6 +11,7 @@ import {
   getAllCoursesAdmin,
   getCourseByAdmin,
   getCourseByUser,
+  getCourseReviews,
   getSingleCourse,
   uploadCourse,
 } from "../controllers/course.controller";
@@ -85,6 +86,8 @@ courseRouter.get(
   authorizeRoles("admin"),
   getAllCoursesAdmin
 );
+
+courseRouter.get("/get-reviews/:courseId", getCourseReviews);
 
 courseRouter.post("/get-vdo-cipher-otp", generateVideoUrl);
 

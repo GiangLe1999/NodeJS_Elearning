@@ -14,5 +14,9 @@ export const formatVideoLength = (totalMinutes: number) => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
 
-  return `${hours} Hours ${minutes} Minutes`;
+  if (hours === 0) {
+    return `${minutes} minutes`;
+  }
+
+  return `${hours}h ${minutes}m`;
 };

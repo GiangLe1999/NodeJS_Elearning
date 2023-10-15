@@ -13,7 +13,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "../form-input";
 import { useRegisterUserMutation } from "@/store/auth/auth-api";
 import toast from "react-hot-toast";
-import { ImSpinner } from "react-icons/im";
 import BtnWithLoading from "../btn-with-loading";
 
 const schema = Yup.object().shape({

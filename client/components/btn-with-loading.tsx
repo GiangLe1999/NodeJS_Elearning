@@ -7,6 +7,8 @@ interface Props {
   customClasses?: string;
   type?: "submit" | "button";
   onClick?: any;
+  id?: string;
+  disabled?: boolean;
 }
 
 const BtnWithLoading: FC<Props> = ({
@@ -15,20 +17,26 @@ const BtnWithLoading: FC<Props> = ({
   customClasses,
   type,
   onClick,
+  id,
+  disabled,
 }): JSX.Element => {
   return (
     <button
       className={`primary-btn w-full ${customClasses}`}
       type={type}
       onClick={onClick && onClick}
+      id={id}
+      disabled={disabled}
     >
-      {isLoading ? (
-        <>
-          <ImSpinner className="animate-spin" size={18} /> Processing
-        </>
-      ) : (
-        <>{content}</>
-      )}
+      <span className="flex items-center justify-center gap-x-1">
+        {isLoading ? (
+          <>
+            <ImSpinner className="animate-spin" size={18} /> Processing
+          </>
+        ) : (
+          <>{content}</>
+        )}
+      </span>
     </button>
   );
 };

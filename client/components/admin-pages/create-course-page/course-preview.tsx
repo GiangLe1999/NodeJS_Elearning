@@ -88,7 +88,7 @@ const CoursePreview: FC<Props> = ({
           </div>
 
           <h2 className="mt-8 font-bold text-xl mb-3">
-            What you&apos;ll learn In This Course
+            What You&apos;ll Learn In This Course
           </h2>
           <ul className="list-disc text-slate-500 dark:text-dark_text space-y-2">
             {courseData.benefits?.map(
@@ -125,6 +125,7 @@ const CoursePreview: FC<Props> = ({
               avatar="https://res.cloudinary.com/dfhheac8o/image/upload/v1696561586/avatars/qtwgyytoxntruc8hkfr6.png"
               content="I recently completed the WordPress Theme Development from Scratch 2.0 course on Udemy, and I cannot praise it enough! This course is an absolute gem for anyone looking to dive into WordPress theme"
               rating={4.5}
+              createdAt={new Date("2022-03-25")}
             />
 
             <Comment
@@ -132,6 +133,7 @@ const CoursePreview: FC<Props> = ({
               avatar="https://res.cloudinary.com/dfhheac8o/image/upload/v1696561586/avatars/qtwgyytoxntruc8hkfr6.png"
               content="I recently completed the WordPress Theme Development from Scratch 2.0 course on Udemy, and I cannot praise it enough! This course is an absolute gem for anyone looking to dive into WordPress theme"
               rating={4.5}
+              createdAt={new Date("2022-03-25")}
             />
           </div>
         </div>

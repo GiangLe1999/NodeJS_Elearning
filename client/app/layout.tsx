@@ -5,12 +5,11 @@ import { Josefin_Sans } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { StoreProvider } from "@/store/store-provider";
 import UserSessionProvider from "@/components/user-session-provider";
-import Footer from "@/components/layout/footer";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-Josefin",
+  variable: "--font-josefin",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +31,6 @@ export default function RootLayout({
           >
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               {children}
-              <Footer />
               <Toaster position="bottom-center" reverseOrder={false} />
             </ThemeProvider>
           </body>

@@ -70,12 +70,14 @@ const Verification: FC<Props> = ({ setRoute }): JSX.Element => {
         />
       </div>
 
-      <BtnWithLoading
-        content="Verify OTP"
-        isLoading={isLoading}
-        customClasses="my-6 !w-[74%] mx-auto"
-        type="submit"
-      />
+      <div className="text-center">
+        <BtnWithLoading
+          content="Verify OTP"
+          isLoading={isLoading}
+          customClasses="my-6 !w-[74%] !mx-auto"
+          type="submit"
+        />
+      </div>
 
       <p className="text-center pt-4 text-slate-700 dark:text-dark_text">
         Go back to sign in?

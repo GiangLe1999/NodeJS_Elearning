@@ -23,12 +23,12 @@ const MobileSidebar: FC<Props> = ({
 
   return (
     <div
-      className={`fixed h-screen top-0 left-0 w-full z-[9999] dark:bg-[unset] bg-[#00000024] transition duration-500 ${
+      className={`fixed h-screen top-0 left-0 w-full z-50 dark:bg-[unset] bg-[#00000024] transition duration-500 ${
         open ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
       }`}
       onClick={() => setOpen(false)}
     >
-      <div className="w-[70%] fixed z-[9999] h-screen bg-white dark:bg-slate-900 top-0 right-0 pb-5 text-center flex flex-col justify-between">
+      <div className="w-[70%] fixed z-50 h-screen bg-white dark:bg-slate-900 top-0 right-0 pb-5 text-center flex flex-col justify-between">
         <div className="flex flex-col justify-center flex-1">
           <NavItems isMobile />
 

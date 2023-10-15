@@ -1,25 +1,36 @@
-import mongoose, { Document, Model, Schema } from "mongoose";
+import mongoose, { Document, Model, Schema, Types } from "mongoose";
 import { IUser } from "./user.model";
 
-interface IComment extends Document {
+export interface IQuestion extends Document {
+  _id: Types.ObjectId;
   user: IUser;
+  title: string;
   question: string;
-  questionReplies: IComment[];
+  questionReplies: IQuestion[];
+  createdAt: Date;
 }
 
-interface IReview extends Document {
+interface IReviewReply extends Document {
+  user: IUser;
+  comment: string;
+}
+
+export interface IReview extends Document {
+  _id: Types.ObjectId;
+  createdAt: Date;
   user: IUser;
   rating: number;
   comment: string;
-  commentReplies: IComment[];
+  commentReplies: IReviewReply[];
 }
 
-interface ILink extends Document {
+export interface ILink extends Document {
   title: string;
   url: string;
 }
 
-interface ICourseData extends Document {
+export interface ICourseData extends Document {
+  _id: Types.ObjectId;
   title: string;
   description: string;
   videoUrl: string;
@@ -29,7 +40,7 @@ interface ICourseData extends Document {
   videoPlayer: string;
   links: ILink[];
   suggestion: string;
-  questions: IComment[];
+  questions: IQuestion[];
 }
 
 export interface ICourse extends Document {
@@ -54,20 +65,26 @@ export interface ICourse extends Document {
   purchased?: number;
 }
 
-const reviewSchema = new Schema<IReview>({
-  user: Object,
-  rating: { type: Number, default: 0 },
-  comment: String,
-  commentReplies: [Object],
-});
+const reviewSchema = new Schema<IReview>(
+  {
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    rating: { type: Number, default: 0 },
+    comment: String,
+    commentReplies: [Object],
+  },
+  { timestamps: true }
+);
 
 const linkSchema = new Schema<ILink>({ title: String, url: String });
 
-const commentSchema = new Schema<IComment>({
-  user: Object,
-  question: String,
-  questionReplies: [Object],
-});
+const commentSchema = new Schema<IQuestion>(
+  {
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    question: String,
+    questionReplies: [Object],
+  },
+  { timestamps: true }
+);
 
 const courseDataSchema = new Schema<ICourseData>({
   videoUrl: String,

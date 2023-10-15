@@ -6,6 +6,11 @@ import jwt from "jsonwebtoken";
 const emailRegexPattern: RegExp =
   /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
+interface ICourse {
+  courseId: string;
+  createdDate: Date;
+}
+
 export interface IUser extends Document {
   name: string;
   email: string;
@@ -16,7 +21,7 @@ export interface IUser extends Document {
   };
   role: string;
   isVerified: boolean;
-  courses: { courseId: string }[];
+  courses: ICourse[];
   comparePassword: (password: string) => Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
@@ -54,11 +59,7 @@ const userSchema: Schema<IUser> = new Schema(
       type: Boolean,
       default: false,
     },
-    courses: [
-      {
-        courseId: String,
-      },
-    ],
+    courses: [{ courseId: String, createdDate: Date }],
   },
   { timestamps: true }
 );

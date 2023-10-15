@@ -22,7 +22,7 @@ const AdminHeader: FC<Props> = (props): JSX.Element => {
       </div>
 
       {open && (
-        <div className="w-[350px] h-[450px] dark:bg-[#111C43] bg-white shadow-xl border dark:border-slate-700 absolute top-16 !z-[9999] rounded">
+        <div className="w-[350px] h-[450px] dark:bg-[#111C43] bg-white shadow-xl border dark:border-slate-700 absolute top-16 !z-50 rounded">
           <h5 className="text-center text-[20px] text-black dark:text-dark_text p-3">
             Notifications
           </h5>

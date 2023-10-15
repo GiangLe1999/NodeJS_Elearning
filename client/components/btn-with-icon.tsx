@@ -13,6 +13,7 @@ interface Props {
   type?: string;
   to?: string;
   external?: boolean;
+  iconCustomClasses?: string;
 }
 
 const BtnWithIcon: FC<Props> = ({
@@ -26,6 +27,7 @@ const BtnWithIcon: FC<Props> = ({
   type,
   to,
   external,
+  iconCustomClasses,
 }): JSX.Element => {
   let Component = "button" as any;
   if (!onClick && href) {
@@ -49,10 +51,13 @@ const BtnWithIcon: FC<Props> = ({
       type={type}
       {...externalLinkAttr}
     >
-      {icon && icon({ size: iconSize })}
-      {content}
+      <span className="flex items-center justify-center gap-x-1">
+        {icon && icon({ size: iconSize, className: iconCustomClasses })}
+        {content}
 
-      {iconBehind && iconBehind({ size: iconSize })}
+        {iconBehind &&
+          iconBehind({ size: iconSize, className: iconCustomClasses })}
+      </span>
     </Component>
   );
 };

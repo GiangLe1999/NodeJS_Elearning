@@ -1,5 +1,6 @@
 "use client";
 import Heading from "@/components/heading";
+import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import Profile from "@/components/profile-page/profile";
 import ProtectedPage from "@/components/protected-page";
@@ -22,13 +23,13 @@ const ProfilePage: NextPage<Props> = () => {
         title={`${user.name} Profile`}
         description={`${user.name} Profile at Elearning website.`}
       />
+      <Header />
       <div className="min-h-screen">
-        <Header />
-
         <div className="mt-28 container">
           <Profile />
         </div>
       </div>
+      <Footer />
     </ProtectedPage>
   );
 };
