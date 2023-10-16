@@ -144,6 +144,31 @@ export const getAllCourses = CatchAsyncErrors(
   }
 );
 
+// Get Courses By Category
+export const getCoursesByCategory = CatchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { categorySlug } = req.params;
+
+      const categoryLowerCase = categorySlug.replace(/-/g, " ");
+
+      const arr = categoryLowerCase.split(" ");
+      for (var i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+      }
+      const category = arr.join(" ");
+
+      const courses = await CourseModel.find({ category }).select(
+        "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
+      );
+
+      res.status(200).json({ success: true, courses, category });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
 // Get course content - only for valid user
 export const getCourseByUser = CatchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -523,6 +548,25 @@ export const getCourseReviews = CatchAsyncErrors(
       }
 
       res.status(200).json({ success: true, course });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// Get Course By Query
+export const getCourseByQuery = CatchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { query } = req.params;
+
+      const courses = await CourseModel.find({
+        name: { $regex: query, $options: "i" },
+      }).select(
+        "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
+      );
+
+      res.status(200).json({ success: true, courses });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

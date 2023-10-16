@@ -10,8 +10,10 @@ import {
   getAllCourses,
   getAllCoursesAdmin,
   getCourseByAdmin,
+  getCourseByQuery,
   getCourseByUser,
   getCourseReviews,
+  getCoursesByCategory,
   getSingleCourse,
   uploadCourse,
 } from "../controllers/course.controller";
@@ -37,8 +39,10 @@ courseRouter.put(
 );
 
 courseRouter.get("/get-course/:id", getSingleCourse);
+courseRouter.get("/search-courses/:query", getCourseByQuery);
 
 courseRouter.get("/get-courses", getAllCourses);
+courseRouter.get("/get-courses/:categorySlug", getCoursesByCategory);
 
 courseRouter.get(
   "/get-course-content/:id",

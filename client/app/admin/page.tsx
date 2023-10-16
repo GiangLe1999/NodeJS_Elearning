@@ -5,6 +5,7 @@ import Heading from "@/components/heading";
 import { NextPage } from "next";
 import ProtectedPage from "@/components/protected-page";
 import { useMount } from "@/hooks/useMount";
+import AdminProtectedPage from "@/components/admin-protected-page";
 
 interface Props {}
 
@@ -14,13 +15,13 @@ const DashboardPage: NextPage<Props> = () => {
   if (!hasMounted) return null;
 
   return (
-    <ProtectedPage>
+    <AdminProtectedPage>
       <Heading
         title="Admin Dashboard | E-Learning"
         description="E-Learning Dashboard for admin of E-Learning Platform"
       />
       <DashboardHero isDashboard />
-    </ProtectedPage>
+    </AdminProtectedPage>
   );
 };
 

@@ -424,3 +424,8 @@ html {
 .css-ryrseu-MuiRating-root {
   @apply !text-[#b4690e] dark:!text-[#faaf00];
 }
+
+/* Courses Category Page */
+.category-tag {
+  @apply rounded-sm px-3 py-2 text-white hover:scale-105 transition;
+}

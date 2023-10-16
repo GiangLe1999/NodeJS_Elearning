@@ -1,4 +1,3 @@
-import { ICourse } from "./../../server/models/course.model";
 import axios from "axios";
 
 export const getBannerLayoutData = async () => {
@@ -17,6 +16,30 @@ export const getAllCoursesData = async () => {
   try {
     const { data } = await axios(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/get-courses`
+    );
+
+    return data.courses;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCourseByCategory = async (categorySlug: string) => {
+  try {
+    const { data } = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/get-courses/${categorySlug}`
+    );
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCoursesByQuery = async (query: string) => {
+  try {
+    const { data } = await axios(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/search-courses/${query}`
     );
 
     return data.courses;

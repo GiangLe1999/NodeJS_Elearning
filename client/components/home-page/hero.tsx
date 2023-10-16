@@ -3,6 +3,7 @@ import NextImage from "../next-image";
 import { BiSearch } from "react-icons/bi";
 import Link from "next/link";
 import { getBannerLayoutData } from "@/lib/fetch-data";
+import SearchBar from "./search-bar";
 
 interface Props {}
 
@@ -28,16 +29,7 @@ const Hero: FC<Props> = async (props): Promise<JSX.Element> => {
           {layoutData.subTitle}
         </p>
 
-        <div className="flex items-center h-[50px] mt-3">
-          <input
-            type="search"
-            placeholder="Search Courses..."
-            className="bg-transparent border dark:border-none dark:bg-[#575757] dark:placeholder:text-[#ffffffdd] rounded-l-[5px] px-2 h-full flex-1 outline-none font-josefin"
-          />
-          <div className="w-[50px] main-gradient rounded-r-[5px] text-dark_text grid place-items-center h-full">
-            <BiSearch size={30} />
-          </div>
-        </div>
+        <SearchBar />
 
         <div className="mt-4 flex items-center gap-2">
           <div className="w-10 aspect-square relative rounded-full overflow-hidden">

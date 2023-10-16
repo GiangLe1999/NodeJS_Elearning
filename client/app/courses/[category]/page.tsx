@@ -1,23 +1,26 @@
 import CategoryTag from "@/components/all-courses-page/category-tag";
 import CourseCard from "@/components/course-card";
 import Heading from "@/components/heading";
-import Footer from "@/components/layout/footer";
-import Header from "@/components/layout/header";
-import { getAllCategories, getAllCoursesData } from "@/lib/fetch-data";
-import { FC } from "react";
 import { ICategory } from "@/components/home-page/categories";
 import { IFetchedCourse } from "@/components/home-page/courses";
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import { getAllCategories, getCourseByCategory } from "@/lib/fetch-data";
+import { NextPage } from "next";
 
-interface Props {}
+interface Props {
+  params: { category: string };
+}
 
-const page: FC<Props> = async (props): Promise<JSX.Element> => {
-  const courses = (await getAllCoursesData()) as IFetchedCourse[];
-  const categories = (await getAllCategories()) as ICategory[];
+const page: NextPage<Props> = async ({ params }) => {
+  const data = await getCourseByCategory(params.category);
+  const courses: IFetchedCourse[] = data.courses;
+  const categories: ICategory[] = await getAllCategories();
 
   return (
     <>
       <Heading
-        title="All Courses | E-Learning"
+        title={`${data.category} Courses | E-Learning`}
         description="E-Learning is a software application for the administration, documentation, tracking, reporting, automation, and delivery of educational."
       />
       <div className="min-h-screen">
@@ -35,12 +38,12 @@ const page: FC<Props> = async (props): Promise<JSX.Element> => {
             <p className="font-semibold text-tertiary dark:text-dark_text text-center mb-6 text-lg">
               We found{" "}
               <span className="text-gradient font-bold">
-                {courses.length} Courses
+                {courses.length} {data.category} Courses
               </span>{" "}
               available for you
             </p>
 
-            <CategoryTag categories={categories} allCourses />
+            <CategoryTag categories={categories} exclude={data.category} />
 
             <div className="grid grid-cols-3 gap-6 mt-10">
               {courses.map((course) => (

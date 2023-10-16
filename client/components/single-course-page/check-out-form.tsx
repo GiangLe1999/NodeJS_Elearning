@@ -10,19 +10,19 @@ import BtnWithLoading from "../btn-with-loading";
 import { AiOutlineWarning } from "react-icons/ai";
 import { createOrder } from "@/lib/mutation-data";
 import { useLoadUserQuery } from "@/store/api-slice";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import socketIO from "socket.io-client";
+
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URL as string;
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 interface Props {
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   courseDetail: IFetchedCourse;
 }
 
-const CheckOutForm: FC<Props> = ({
-  setOpenModal,
-  courseDetail,
-}): JSX.Element => {
+const CheckOutForm: FC<Props> = ({ courseDetail }): JSX.Element => {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState("");
