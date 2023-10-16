@@ -1,18 +1,27 @@
 import mongoose, { Document, Model, Schema, Types } from "mongoose";
 import { IUser } from "./user.model";
 
-export interface IQuestion extends Document {
+export interface IReply extends Document {
   _id: Types.ObjectId;
   user: IUser;
-  title: string;
-  question: string;
-  questionReplies: IQuestion[];
+  answer: string;
   createdAt: Date;
 }
 
-interface IReviewReply extends Document {
+export interface IQuestion extends Document {
+  _id: Types.ObjectId;
   user: IUser;
-  comment: string;
+  title?: string;
+  question: string;
+  questionReplies: IReply[];
+  createdAt: Date;
+}
+
+export interface IReviewReply extends Document {
+  _id: Types.ObjectId;
+  user: IUser;
+  answer: string;
+  createdAt: Date;
 }
 
 export interface IReview extends Document {
@@ -65,12 +74,20 @@ export interface ICourse extends Document {
   purchased?: number;
 }
 
+const replySchema = new Schema<IReply>(
+  {
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    answer: String,
+  },
+  { timestamps: true }
+);
+
 const reviewSchema = new Schema<IReview>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     rating: { type: Number, default: 0 },
     comment: String,
-    commentReplies: [Object],
+    commentReplies: [replySchema],
   },
   { timestamps: true }
 );
@@ -80,8 +97,9 @@ const linkSchema = new Schema<ILink>({ title: String, url: String });
 const commentSchema = new Schema<IQuestion>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
+    title: String,
     question: String,
-    questionReplies: [Object],
+    questionReplies: [replySchema],
   },
   { timestamps: true }
 );

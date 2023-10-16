@@ -55,3 +55,67 @@ export const createQuestion = async (
     console.log(error.response.data.message);
   }
 };
+
+export const createReview = async (
+  courseId: string,
+  rating: number,
+  review: string
+) => {
+  try {
+    const { data } = await axios.put(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/add-review/${courseId}`,
+      { rating, review },
+      {
+        withCredentials: true,
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+    console.log(error.response.data.message);
+  }
+};
+
+export const addAnswer = async (
+  answer: string,
+  courseId: string,
+  contentId: string,
+  questionId: string
+) => {
+  try {
+    const { data } = await axios.put(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/add-answer`,
+      { answer, courseId, contentId, questionId },
+      {
+        withCredentials: true,
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+    console.log(error.response.data.message);
+  }
+};
+
+export const addReviewReply = async (
+  answer: string,
+  courseId: string,
+  reviewId: string
+) => {
+  try {
+    const { data } = await axios.put(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/add-reply`,
+      { answer, courseId, reviewId },
+      {
+        withCredentials: true,
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+    console.log(error.response.data.message);
+  }
+};

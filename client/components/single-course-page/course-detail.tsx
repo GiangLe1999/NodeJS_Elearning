@@ -31,6 +31,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckOutForm from "./check-out-form";
 import { FaInfoCircle } from "react-icons/fa";
 import Link from "next/link";
+import NoContentYet from "../no-content-yet";
 
 interface Props {
   courseDetail: IFetchedCourse;
@@ -94,6 +95,8 @@ const CourseDetail: FC<Props> = ({ courseDetail, courseId }): JSX.Element => {
       createIntent(amount);
     }
   }, [publishableKey, courseDetail]);
+
+  const formattedReviews = [...courseDetail.reviews].reverse();
 
   return (
     <div className="container my-28">
@@ -173,8 +176,8 @@ const CourseDetail: FC<Props> = ({ courseDetail, courseId }): JSX.Element => {
 
           <div className="flex items-center gap-3 mb-4">
             <p className="flex items-center gap-1 font-bold text-xl">
-              <BiSolidStar color="#faaf00" className="-mt-1" />
-              <span>4.5 Course Rating</span>
+              <BiSolidStar className="-mt-1 !text-[#b4690e] dark:!text-[#faaf00]" />
+              <span>{courseDetail.ratings} Course Rating</span>
             </p>
 
             <DotSpan />
@@ -184,22 +187,22 @@ const CourseDetail: FC<Props> = ({ courseDetail, courseId }): JSX.Element => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            {courseDetail.reviews.length
-              ? courseDetail?.reviews
-                  ?.reverse()
-                  .map((review: IReview, index) => (
-                    <Comment
-                      key={review._id.toString()}
-                      name={review.user.name}
-                      avatar={review.user?.avatar?.url}
-                      content={review.comment}
-                      rating={review.rating}
-                      createdAt={review.createdAt}
-                    />
-                  ))
-              : "No Reviews"}
-          </div>
+          {formattedReviews.length ? (
+            <div className="grid grid-cols-2 gap-6">
+              {formattedReviews.map((review: IReview, index) => (
+                <Comment
+                  key={review._id.toString()}
+                  name={review.user.name}
+                  avatar={review.user?.avatar?.url}
+                  content={review.comment}
+                  rating={review.rating}
+                  createdAt={review.createdAt}
+                />
+              ))}
+            </div>
+          ) : (
+            <NoContentYet description="There aren't any reviews for this course yet" />
+          )}
         </div>
 
         <div className="flex-1 custom-shadow dark:border dark:border-slate-700 z-0 h-fit">
@@ -254,7 +257,9 @@ const CourseDetail: FC<Props> = ({ courseDetail, courseId }): JSX.Element => {
                 <BiCommentDetail className="text-secondary -mt-[2px]" />
                 Reviews
               </span>
-              <span className="font-bold text-slate-500">0 Review</span>
+              <span className="font-bold text-slate-500">
+                {courseDetail.reviews.length} Reviews
+              </span>
             </div>
 
             <div className="course-info-item">
@@ -262,7 +267,9 @@ const CourseDetail: FC<Props> = ({ courseDetail, courseId }): JSX.Element => {
                 <BiStar className="text-secondary -mt-1" />
                 Rating
               </span>
-              <span className="font-bold text-slate-500 ">4.5 Scores</span>
+              <span className="font-bold text-slate-500 ">
+                {courseDetail.ratings} Scores
+              </span>
             </div>
 
             <div className="course-info-item">

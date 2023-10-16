@@ -103,9 +103,7 @@ const LectureTabContent: FC<Props> = ({
             refetch={refetch}
           />
         )}
-        {active === 3 && (
-          <CourseReviews courseId={courseId} refetch={refetch} />
-        )}
+        {active === 3 && <CourseReviews courseId={courseId} />}
       </div>
     </>
   );

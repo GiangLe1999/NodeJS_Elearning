@@ -11,10 +11,9 @@ import Comment from "../comment";
 
 interface Props {
   courseId: string;
-  refetch: any;
 }
 
-const CourseReviews: FC<Props> = ({ courseId, refetch }): JSX.Element => {
+const CourseReviews: FC<Props> = ({ courseId }): JSX.Element => {
   const user = useUserInfo();
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,12 +66,16 @@ const CourseReviews: FC<Props> = ({ courseId, refetch }): JSX.Element => {
           <div className="mt-12">
             {reviews.map((review, index) => (
               <Comment
+                reviewId={review._id.toString()}
                 key={review._id.toString()}
                 name={review.user.name}
                 avatar={review.user?.avatar?.url}
                 content={review.comment}
                 rating={review.rating}
                 createdAt={review.createdAt}
+                reviewReplies={review.commentReplies}
+                setReviews={setReviews}
+                courseId={courseId}
               />
             ))}
           </div>
@@ -85,6 +88,10 @@ const CourseReviews: FC<Props> = ({ courseId, refetch }): JSX.Element => {
               setRatingValue={setRatingValue}
               comment={comment}
               setComment={setComment}
+              courseId={courseId}
+              setReviews={setReviews}
+              setAverageRatings={setAverageRatings}
+              setHasReviewed={setHasReviewed}
             />
           )}
         </div>

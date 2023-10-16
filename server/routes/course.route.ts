@@ -64,14 +64,14 @@ courseRouter.put(
 
 courseRouter.put("/add-answer", updateAccessToken, isAuthenticated, addAnswer);
 
-courseRouter.post(
+courseRouter.put(
   "/add-review/:id",
   updateAccessToken,
   isAuthenticated,
   addReview
 );
 
-courseRouter.post(
+courseRouter.put(
   "/add-reply",
   updateAccessToken,
   isAuthenticated,

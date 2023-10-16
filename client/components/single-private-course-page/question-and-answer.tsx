@@ -69,6 +69,8 @@ const QuestionAndAnswer: FC<Props> = ({
     }
   };
 
+  const formattedQuestion = [...(questions as [])].reverse() as IQuestion[];
+
   return (
     <div>
       <div className="border dark:border-slate-700 rounded-sm p-4">
@@ -110,13 +112,20 @@ const QuestionAndAnswer: FC<Props> = ({
         All questions in this lecture ({questions?.length})
       </h3>
       <div>
-        {questions?.map((question) => (
+        {formattedQuestion.reverse().map((question) => (
           <Comment
+            refetch={refetch}
+            courseId={courseId}
+            contentId={contentId}
             key={question._id.toString()}
+            questionId={question._id.toString()}
             name={question.user.name}
             avatar={question.user?.avatar?.url}
             content={question.question}
             createdAt={question.createdAt}
+            title={question.title}
+            isQuestion
+            questionReplies={question.questionReplies}
           />
         ))}
       </div>

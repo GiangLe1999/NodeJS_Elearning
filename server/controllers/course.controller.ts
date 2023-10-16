@@ -161,7 +161,7 @@ export const getCourseByUser = CatchAsyncErrors(
       }
 
       const course = await CourseModel.findById(courseId).populate(
-        "courseData.questions.user"
+        "courseData.questions.user courseData.questions.questionReplies.user"
       );
 
       const content = course?.courseData;
@@ -256,7 +256,9 @@ export const addAnswer = CatchAsyncErrors(
       const { answer, courseId, contentId, questionId } =
         req.body as IAddAnswerData;
 
-      const course = await CourseModel.findById(courseId);
+      const course = await CourseModel.findById(courseId).populate(
+        "courseData.questions.user"
+      );
 
       if (!mongoose.Types.ObjectId.isValid(contentId)) {
         return next(new ErrorHandler("Invalid content id", 400));
@@ -279,7 +281,7 @@ export const addAnswer = CatchAsyncErrors(
       }
 
       // Create new answer object
-      const newAnswer: any = { user: req.user, answer };
+      const newAnswer: any = { user: req.user?._id, answer };
 
       // Add answer to course content
       question.questionReplies.push(newAnswer);
@@ -354,9 +356,13 @@ export const addReview = CatchAsyncErrors(
 
         const avgRatings = totalRatings / (course?.reviews.length || 0);
 
-        course.ratings = avgRatings;
+        course.ratings = Number(avgRatings.toFixed(2));
 
         await course.save();
+
+        const updatedCourse = await CourseModel.findById(courseId).populate(
+          "reviews.user"
+        );
 
         // Push notification về Admin
         const notification = {
@@ -364,7 +370,11 @@ export const addReview = CatchAsyncErrors(
           message: `${req.user?.name} has given a review in ${course?.name}`,
         };
 
-        res.status(200).json({ success: true, course });
+        res.status(200).json({
+          success: true,
+          reviews: updatedCourse?.reviews,
+          ratings: updatedCourse?.ratings,
+        });
       } else {
         return next(new ErrorHandler("Found no course", 404));
       }
@@ -375,7 +385,7 @@ export const addReview = CatchAsyncErrors(
 );
 
 interface IAddReviewData {
-  comment: string;
+  answer: string;
   courseId: string;
   reviewId: string;
 }
@@ -384,7 +394,7 @@ interface IAddReviewData {
 export const addReplyToReview = CatchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { comment, courseId, reviewId } = req.body as IAddReviewData;
+      const { answer, courseId, reviewId } = req.body as IAddReviewData;
       const course = await CourseModel.findById(courseId);
 
       if (!course) {
@@ -400,15 +410,19 @@ export const addReplyToReview = CatchAsyncErrors(
       }
 
       const replyData: any = {
-        user: req.user,
-        comment,
+        user: req.user?._id,
+        answer,
       };
 
       review.commentReplies.push(replyData);
 
       await course?.save();
 
-      res.status(200).json({ success: true, course });
+      const updatedCourse = await CourseModel.findById(courseId).populate(
+        "reviews.user reviews.commentReplies.user"
+      );
+
+      res.status(200).json({ success: true, reviews: updatedCourse?.reviews });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -502,7 +516,7 @@ export const getCourseReviews = CatchAsyncErrors(
 
       const course = await CourseModel.findById(courseId)
         .select("reviews ratings")
-        .populate("reviews.user");
+        .populate("reviews.user reviews.commentReplies.user");
 
       if (!course) {
         return next(new ErrorHandler("Course not found", 400));

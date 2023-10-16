@@ -110,8 +110,11 @@ const CoursePreview: FC<Props> = ({
 
           <div className="flex items-center gap-3 mb-4">
             <p className="flex items-center gap-1 font-bold text-xl">
-              <BiSolidStar color="#b4690e" className="-mt-1" />
-              <span>4.5 course rating</span>
+              <BiSolidStar
+                color=""
+                className="-mt-1 !text-[#b4690e] dark:!text-[#faaf00]"
+              />
+              <span>{courseData.ratings} course rating</span>
             </p>
 
             <DotSpan />

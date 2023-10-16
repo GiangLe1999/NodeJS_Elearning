@@ -43,7 +43,7 @@ const CourseContentMedia: FC<Props> = ({
         >
           <CourseLectureNavigator
             onlyNext={activeVideo === 0}
-            onlyPrev={activeVideo === courseData.length - 1}
+            onlyPrev={activeVideo === courseData?.length - 1}
             backHandler={() =>
               setActiveVideo(
                 courseData && activeVideo === 0 ? activeVideo : activeVideo - 1
